@@ -1,0 +1,17 @@
+# Entorno de Python
+.venv/
+__pycache__/
+*.pyc
+
+# Archivos temporales
+.ipynb_checkpoints/
+.DS_Store
+
+# Credenciales
+.env
+
+# Datos locales
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
