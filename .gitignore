@@ -1,17 +1,24 @@
-# Entorno de Python
+# Entorno virtual
 .venv/
 __pycache__/
 *.pyc
 
-# Archivos temporales
+# Jupyter
 .ipynb_checkpoints/
+
+# macOS
 .DS_Store
+.AppleDouble
 
 # Credenciales
 .env
 
-# Datos locales
-data/raw/*
-data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
+# Datos (se regeneran con el codigo, no se versionan)
+F1/data/*
+!F1/data/.gitkeep
+
+F2/data/raw/*
+!F2/data/raw/.gitkeep
+
+F2/data/processed/*
+!F2/data/processed/.gitkeep
