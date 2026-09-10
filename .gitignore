@@ -21,3 +21,7 @@ F2/data/raw/*
 !F2/data/raw/.gitkeep
 
 # Los archivos procesados SI se versionan: son livianos y dan reproducibilidad
+
+# Carpetas generadas por Anaconda/Jupyter
+.virtual_documents/
+anaconda_projects/
