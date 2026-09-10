@@ -13,12 +13,11 @@ __pycache__/
 # Credenciales
 .env
 
-# Datos (se regeneran con el codigo, no se versionan)
+# Datos: la base original queda fuera por ahora (13MB, se documenta en README)
 F1/data/*
 !F1/data/.gitkeep
 
 F2/data/raw/*
 !F2/data/raw/.gitkeep
 
-F2/data/processed/*
-!F2/data/processed/.gitkeep
+# Los archivos procesados SI se versionan: son livianos y dan reproducibilidad
