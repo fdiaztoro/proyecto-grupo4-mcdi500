@@ -59,6 +59,8 @@ source .venv/bin/activate        # macOS y Linux
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 
+nbstripout --install
+
 python -m ipykernel install --user --name grupo4_mcdi500 --display-name "Python (grupo4-mcdi500)"
 ```
 
