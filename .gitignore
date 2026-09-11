@@ -13,15 +13,12 @@ __pycache__/
 # Credenciales
 .env
 
-# Datos: la base original queda fuera por ahora (13MB, se documenta en README)
-F1/data/*
-!F1/data/.gitkeep
-
-F2/data/raw/*
-!F2/data/raw/.gitkeep
-
-# Los archivos procesados SI se versionan: son livianos y dan reproducibilidad
-
 # Carpetas generadas por Anaconda/Jupyter
 .virtual_documents/
 anaconda_projects/
+
+# F1: sin datos propios por ahora
+F1/data/*
+!F1/data/.gitkeep
+
+# F2: base original y procesados SI se versionan (livianos, dan reproducibilidad)
