@@ -64,6 +64,8 @@ python -m pip install -r requirements.txt
 
 # 4. Activar la higiene automática de notebooks en el repositorio local
 nbstripout --install
+# Evita que quede como "modificado" el patch de Python del kernel (metadata.language_info.version)
+git config filter.nbstripout.extrakeys "metadata.language_info.version"
 
 # 5. Registrar el kernel del proyecto en Jupyter
 python -m ipykernel install --user --name grupo4_mcdi500 --display-name "Python (grupo4-mcdi500)"
