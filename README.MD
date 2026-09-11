@@ -49,18 +49,23 @@ F2/
 Python 3.13.
 
 ```bash
+# 1. Clonar repositorio e ingresar a la carpeta
 git clone https://github.com/fdiaztoro/proyecto-grupo4-mcdi500.git
 cd proyecto-grupo4-mcdi500
 
+# 2. Crear y activar entorno virtual
 python3 -m venv .venv
 source .venv/bin/activate        # macOS y Linux
 # .venv\Scripts\activate         # Windows
 
+# 3. Instalar dependencias del proyecto
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 
+# 4. Activar la higiene automática de notebooks en el repositorio local
 nbstripout --install
 
+# 5. Registrar el kernel del proyecto en Jupyter
 python -m ipykernel install --user --name grupo4_mcdi500 --display-name "Python (grupo4-mcdi500)"
 ```
 
@@ -75,7 +80,16 @@ Ambos notebooks deben correr de principio a fin sin errores
 
 ## Convención de commits
 
+El equipo utiliza prefijos estandarizados para registrar cada avance en Git. 
+Los mensajes deben ser breves, descriptivos y redactados en tiempo presente.
+
 Prefijos usados: `docs`, `data`, `feat`, `fix`, `refactor`, `chore`.
+* `feat:` Nueva funcionalidad, módulo o notebook analítico (ej. `feat: agrega funcion para detectar valores atipicos`).
+* `fix:` Corrección de un error en código, rutas o cuadernos (ej. `fix: corrige lectura de fechas en formato dd-mm-yyyy`).
+* `data:` Incorporación, filtrado o transformación de datos en `data/` (ej. `data: imputa valores faltantes de edad por la mediana`).
+* `docs:` Cambios en la documentación, README u observaciones del informe (ej. `docs: actualiza decisiones tecnicas de la Fase 1`).
+* `refactor:` Reorganización o optimización de código sin alterar sus resultados (ej. `refactor: modulariza funciones de limpieza en src/`).
+* `chore:` Tareas de mantenimiento de la estructura o del entorno (ej. `chore: actualiza dependencias en requirements.txt`).
 
 ## Decisiones técnicas
 
