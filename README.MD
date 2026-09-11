@@ -1,0 +1,99 @@
+# Grupo 4 — MCDI500
+
+Factores sociodemográficos y riesgo cardiovascular en la Encuesta
+Nacional de Salud (ENS) 2016–2017.
+
+## Integrantes
+
+- Felipe Díaz Toro
+- Pablo Ríos Passteni
+- Guillermo Subiabre Chacón
+- Ninoska Yévenes Hernández
+
+## Pregunta de investigación
+
+¿Cómo se relacionan la edad, el sexo, la educación, el ingreso del
+hogar y la zona de residencia con los indicadores de riesgo
+cardiovascular seleccionados en participantes de la ENS 2016–2017?
+
+## Datos
+
+- **Fuente:** Encuesta Nacional de Salud (ENS) 2016–2017, Ministerio
+  de Salud de Chile (MINSAL).
+- **Archivo base:** `F2/data/raw/ens2016.xlsx` (6.233 registros,
+  1.173 columnas originales). Incluido en el repositorio.
+- **Subconjunto seleccionado:** `F2/data/processed/ens_variables_seleccionadas.xlsx`
+  (16 variables, 6.233 filas).
+- **Subconjunto elegible F1–F2:** `F2/data/processed/ens_variables_f1f2.xlsx`
+  (5.520 filas, filtrado por el ponderador `Fexp_F1F2p_Corr`).
+- **Ponderador utilizado:** `Fexp_F1F2p_Corr` (componente combinado F1–F2).
+
+## Estructura del repositorio
+F1/
+├── data/ (reservado, sin datos propios aun)
+└── notebooks/
+└── S1_F1_Definicion.ipynb Definicion del problema y entorno
+
+F2/
+├── data/
+│ ├── raw/ens2016.xlsx Base original (sin modificar)
+│ └── processed/ Subconjuntos generados por codigo
+├── docs/
+│ ├── informe_validacion_f1f2.md
+│ └── resumen_filtro_f1f2.csv
+└── notebooks/
+└── S1_F2_Preprocesamiento.ipynb Seleccion, filtro y validacion
+
+## Requisitos y ejecución
+
+Python 3.13.
+
+```bash
+git clone https://github.com/fdiaztoro/proyecto-grupo4-mcdi500.git
+cd proyecto-grupo4-mcdi500
+
+python3 -m venv .venv
+source .venv/bin/activate        # macOS y Linux
+# .venv\Scripts\activate         # Windows
+
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+
+python -m ipykernel install --user --name grupo4_mcdi500 \
+    --display-name "Python (grupo4-mcdi500)"
+```
+
+Abrir JupyterLab (o VS Code) y ejecutar, en este orden, seleccionando
+el kernel **Python (grupo4-mcdi500)**:
+
+1. `F1/notebooks/S1_F1_Definicion.ipynb`
+2. `F2/notebooks/S1_F2_Preprocesamiento.ipynb`
+
+Ambos notebooks deben correr de principio a fin sin errores
+(Kernel → Restart Kernel and Run All Cells).
+
+## Convención de commits
+
+Prefijos usados: `docs`, `data`, `feat`, `fix`, `refactor`, `chore`.
+
+## Decisiones técnicas
+
+- Se utiliza `Fexp_F1F2p_Corr` como ponderador porque el análisis
+  combina variables de los formularios F1 y F2. La muestra elegible
+  es de 5.520 personas de un total de 6.233 (713 excluidas por
+  ponderador no válido). La suma de ponderadores del subconjunto
+  (~14.518.969) es consistente con la población de referencia del
+  informe metodológico de la ENS 2016–2017.
+- La base original y los subconjuntos procesados se versionan en el
+  repositorio porque son livianos (menos de 15 MB en total) y
+  provienen de una encuesta pública de acceso abierto.
+- Los códigos de no respuesta (no sabe, no responde, no aplica) aún
+  no se han diferenciado; esa tarea corresponde a la limpieza en F2.
+
+## Pendientes
+
+- Exploración documentada (distribuciones, gráficos) en F2.
+- Diferenciación de códigos no sabe / no responde / no aplica.
+- Limpieza y transformación de variables.
+- Análisis del efecto de las exclusiones sobre la representatividad.
+- Módulos reutilizables en `src/` y pruebas en `tests/`.
