@@ -59,8 +59,7 @@ source .venv/bin/activate        # macOS y Linux
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 
-python -m ipykernel install --user --name grupo4_mcdi500 \
-    --display-name "Python (grupo4-mcdi500)"
+python -m ipykernel install --user --name grupo4_mcdi500 --display-name "Python (grupo4-mcdi500)"
 ```
 
 Abrir JupyterLab (o VS Code) y ejecutar, en este orden, seleccionando
