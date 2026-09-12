@@ -20,29 +20,38 @@ cardiovascular seleccionados en participantes de la ENS 2016–2017?
 
 - **Fuente:** Encuesta Nacional de Salud (ENS) 2016–2017, Ministerio
   de Salud de Chile (MINSAL).
-- **Archivo base:** `F2/data/raw/ens2016.xlsx` (6.233 registros,
+- **Archivo base:** `data/raw/ens2016.xlsx` (6.233 registros,
   1.173 columnas originales). Incluido en el repositorio.
-- **Subconjunto seleccionado:** `F2/data/processed/ens_variables_seleccionadas.xlsx`
+- **Subconjunto seleccionado:** `data/processed/ens_variables_seleccionadas.xlsx`
   (16 variables, 6.233 filas).
-- **Subconjunto elegible F1–F2:** `F2/data/processed/ens_variables_f1f2.xlsx`
+- **Subconjunto elegible F1–F2:** `data/processed/ens_variables_f1f2.xlsx`
   (5.520 filas, filtrado por el ponderador `Fexp_F1F2p_Corr`).
 - **Ponderador utilizado:** `Fexp_F1F2p_Corr` (componente combinado F1–F2).
 
 ## Estructura del repositorio
-F1/
-├── data/ (reservado, sin datos propios aun)
-└── notebooks/
-└── S1_F1_Definicion.ipynb Definicion del problema y entorno
 
-F2/
+proyecto-grupo4-mcdi500/
 ├── data/
-│ ├── raw/ens2016.xlsx Base original (sin modificar)
-│ └── processed/ Subconjuntos generados por codigo
+│   ├── raw/
+│   │   └── ens2016.xlsx    Base original (sin modificar)
+│   └── processed/
+│       ├── ens_variables_seleccionadas.xlsx
+│       └── ens_variables_f1f2.xlsx
 ├── docs/
-│ ├── informe_validacion_f1f2.md
-│ └── resumen_filtro_f1f2.csv
-└── notebooks/
-└── S1_F2_Preprocesamiento.ipynb Seleccion, filtro y validacion
+│   ├── informe_validacion_f1f2.md
+│   └── resumen_filtro_f1f2.csv
+├── F1/
+│   └── notebooks/
+│       └── S1_F1_Definicion.ipynb    Definicion del problema y entorno
+├── F2/
+│   └── notebooks/
+│       └── S1_F2_Preprocesamiento.ipynb    Pipeline de obtención,limpieza y mantenimiento
+├── src/
+├── tests/
+├── .gitattributes
+├── .gitignore
+├── README.MD
+└── requirements.txt
 
 ## Requisitos y ejecución
 
