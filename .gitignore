@@ -22,3 +22,7 @@ F1/data/*
 !F1/data/.gitkeep
 
 # F2: base original y procesados SI se versionan (livianos, dan reproducibilidad)
+
+# Datos pesados y modelos
+*.ckpt
+*.pth
