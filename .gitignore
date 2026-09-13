@@ -26,3 +26,6 @@ F1/data/*
 # Datos pesados y modelos
 *.ckpt
 *.pth
+
+# Archivos de bloqueo temporal de Microsoft Office (se crean al abrir un .xlsx/.docx)
+~$*
