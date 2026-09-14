@@ -1,0 +1,17 @@
+variable,rol,descripcion,dtype,n_unicos,pct_nulos
+IdEncuesta,identificador,Identificador unico de la persona encuestada,int64,5520,0.0
+FechaInicioF1,fecha,Fecha y hora de inicio de la entrevista F1,datetime64[us],5512,0.0
+Edad,continua,Edad en anios,int64,83,0.0
+Sexo,binaria,"1 = Hombre, 2 = Mujer",int64,2,0.0
+Zona,binaria,"1 = Urbano, 2 = Rural",int64,2,0.0
+HTA,binaria,1 = hipertension arterial diagnosticada,float64,2,0.2
+di3,nominal,"Diagnostico de diabetes (codigos 1/2/3, ver libro de codigos)",int64,3,0.0
+dis2,nominal,"Diagnostico de colesterol alto (codigos 1 a 4, ver libro de codigos)",int64,4,0.0
+IMC,continua,Indice de masa corporal,float64,5332,0.7
+anos_estudio_MINSAL_1,discreta,Anios de escolaridad,float64,23,0.9
+GPAQ,ordinal,Nivel de actividad fisica: 1 Bajo < 2 Moderado < 3 Alto,float64,3,3.6
+as27,continua,Ingreso total del hogar (pesos chilenos),float64,254,18.0
+as28,ordinal,"Tramo de ingreso per capita (1 a 11, orden creciente)",int64,12,0.0
+Fexp_F1F2p_Corr,continua,"Ponderador muestral combinado F1-F2 (diseno, no predictor)",float64,4764,0.0
+Conglomerado,identificador,"Conglomerado del diseno muestral (diseno, no predictor)",int64,1075,0.0
+Estrato,identificador,"Estrato del diseno muestral (diseno, no predictor)",int64,30,0.0

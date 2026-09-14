@@ -1,0 +1,19 @@
+clave,valor
+proyecto.titulo,Factores sociodemograficos y riesgo cardiovascular
+proyecto.fase,F2
+proyecto.semilla,2026
+datos.archivo_origen,ens2016.xlsx
+datos.fuente.institucion,MINSAL - Departamento de Epidemiologia
+datos.fuente.encuesta,ENS 2016-2017
+datos.ponderador,Fexp_F1F2p_Corr
+datos.n_filas_final,5511
+decisiones.codigos_no_respuesta.as28,-9999 marcado como NaN
+decisiones.filas_eliminadas.HTA_nulo,9
+decisiones.imputacion.IMC,mediana
+decisiones.imputacion.as27,mediana por grupo de edad
+decisiones.imputacion.anos_estudio_MINSAL_1,mediana
+decisiones.imputacion.GPAQ,moda
+decisiones.imputacion.as28,moda
+decisiones.reclasificacion.GPAQ,de nominal (equipo) a ordinal (este cuaderno)
+decisiones.escalador,standard
+decisiones.variables_no_transformadas,"Fexp_F1F2p_Corr, Conglomerado, Estrato"
