@@ -10,10 +10,11 @@ datos.n_filas_final,5511
 decisiones.codigos_no_respuesta.as28,-9999 marcado como NaN
 decisiones.filas_eliminadas.HTA_nulo,9
 decisiones.imputacion.IMC,mediana
-decisiones.imputacion.as27,mediana por grupo de edad
 decisiones.imputacion.anos_estudio_MINSAL_1,mediana
 decisiones.imputacion.GPAQ,moda
-decisiones.imputacion.as28,moda
+decisiones.imputacion.as27_parcial,"mediana por tramo de as28 (177 casos sin monto, con tramo conocido)"
+decisiones.faltantes_genuinos_no_imputados.as27,"816 nulos (misma no respuesta economica que as28, no aleatoria)"
+decisiones.faltantes_genuinos_no_imputados.as28,816 nulos (no respuesta de ingreso; ver as28_no_responde)
 decisiones.reclasificacion.GPAQ,de nominal (equipo) a ordinal (este cuaderno)
 decisiones.escalador,standard
 decisiones.variables_no_transformadas,"Fexp_F1F2p_Corr, Conglomerado, Estrato"
