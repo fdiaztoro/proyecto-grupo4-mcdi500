@@ -93,20 +93,26 @@ Obtener → Explorar → Identificar códigos especiales → Limpiar
   es de 5.520 personas de un total de 6.233.
 - De seis variables candidatas a códigos especiales de no respuesta
   (as27, as28, di3, dis2, HTA, GPAQ), solo as28 contiene el código
-  -9999; no aparece -8888 en ninguna. No se identificaron casos de
-  "no aplica".
+  -9999 (818 casos detectados); no aparece -8888 en ninguna. No se
+  identificaron casos de "no aplica": ninguna de estas variables
+  depende de un salto condicional del cuestionario.
 - Se eliminan 9 filas con HTA nulo (diagnóstico clínico binario: no
-  se imputa un diagnóstico que nadie reportó).
-- as27 (ingreso del hogar) se imputa por mediana según grupo de edad,
-  tras comparar cuatro estrategias con evidencia cuantitativa.
-- **as28 y GPAQ NO se imputan**: se dejan como faltantes genuinos
-  (Int64 nullable). Las 818 personas sin as28 tampoco tienen as27
-  (ninguna superposición), lo que sugiere que la no respuesta de
-  ingreso no es aleatoria. GPAQ no está documentado como variable
-  cruda en los libros de códigos F1/F2 disponibles; su codificación
-  (1=Bajo, 2=Moderado, 3=Alto) se asume por ser el estándar del
-  cuestionario GPAQ de la OMS, pendiente de verificar antes de la
-  Fase 3.
+  se imputa un diagnóstico que nadie reportó). Quedan 5.511 filas.
+- **as28: se convierte -9999 a NaN y NO se imputa.** Quedan 816
+  personas sin as28 tras excluir las filas con HTA nulo. Se crea la
+  bandera `as28_no_responde`. No se imputa con la moda para no
+  ocultar la no respuesta bajo un tramo inventado.
+- **as27 se imputa parcialmente:** de los 816 casos sin monto y sin
+  tramo, se identifican 177 donde sí se conoce el tramo de as28; esos
+  177 se imputan con la mediana de as27 dentro de su propio tramo
+  (imputación estratificada). Los 816 casos restantes -sin monto ni
+  tramo- quedan como NaN. Se crea la bandera `as27_imputado`.
+- Imputar IMC con la mediana (37 nulos reales, 2,08% de atípicos por
+  IQR) y años de estudio con la mediana (47 nulos reales).
+- **GPAQ se imputa con la moda** (196 nulos, moda = 1 "Bajo"): variable
+  ordinal con proporción faltante acotada; la moda conserva una
+  categoría observada real, a diferencia de la media/mediana, que no
+  respeta categorías ordinales discretas.
 - di3 y dis2 se codifican con One-Hot Encoding usando el nombre real
   de cada categoría (Sí/No/No recuerda, etc.), verificado contra el
   libro de códigos oficial F1.
