@@ -41,3 +41,42 @@ def medir_memoria(funcion, *args):
     actual, pico = tracemalloc.get_traced_memory()
     tracemalloc.stop()
     return pico, resultado
+
+
+
+
+def buscar_iterrows_por_clave(df, clave, valor):
+    """Busqueda real: recorre hasta encontrar la clave (no una posicion)."""
+    for _, fila in df.iterrows():
+        if fila[clave] == valor:
+            return fila
+    return None
+
+
+def buscar_vectorizado(df, clave, valor):
+    """Busqueda con mascara booleana vectorizada: O(n), sin iterrows."""
+    resultado = df[df[clave] == valor]
+    return resultado.iloc[0] if len(resultado) > 0 else None
+
+
+def construir_indice_pandas(df, clave):
+    """Costo de construccion usando set_index de pandas."""
+    return df.set_index(clave)
+
+
+def construir_indice_dict(df, clave):
+    """Costo de construccion usando un diccionario nativo de Python."""
+    return {fila[clave]: fila for _, fila in df.iterrows()}
+
+
+def buscar_indexado_pandas(df_indexado, valor):
+    """Busqueda O(1) sobre un indice ya construido con pandas."""
+    try:
+        return df_indexado.loc[valor]
+    except KeyError:
+        return None
+
+
+def buscar_indexado_dict(indice_dict, valor):
+    """Busqueda O(1) sobre un diccionario ya construido."""
+    return indice_dict.get(valor)
