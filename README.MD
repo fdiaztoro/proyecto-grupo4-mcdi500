@@ -34,6 +34,7 @@ de la ENS 2016-2017?
 
 ## Estructura del repositorio
 
+```
 proyecto-grupo4-mcdi500/
 ├── data/
 │ ├── raw/ens2016.xlsx Base original, sin modificar
@@ -43,11 +44,18 @@ proyecto-grupo4-mcdi500/
 ├── F2/
 │ ├── notebooks/S1_F2_Preprocesamiento.ipynb
 │ └── docs/ Diccionario, resumen del filtro, metadatos
-├── docs/ Informe de validación general
-├── src/ tests/ Reservados para próximas fases
+├── F3/
+│ ├── notebooks/f3_formativa_complejidad.ipynb
+│ └── docs/evidencias/ Notebook de F3 ejecutado en HTML/PDF (con salidas)
+├── src/
+│ └── medicion.py Funciones de búsqueda y medición de tiempo y memoria
+├── docs/
+│ └── evidencias/ Notebooks de F1 y F2 ejecutados en HTML/PDF (con salidas)
+├── tests/ Reservado para próximas fases
 ├── .gitignore
 ├── requirements.txt
-└── README.md
+└── README.MD
+```
 
 
 ## Requisitos y ejecución
@@ -82,9 +90,16 @@ el kernel **Python (grupo4-mcdi500)**:
 
 1. `F1/notebooks/S1_F1_Definicion.ipynb`
 2. `F2/notebooks/S1_F2_Preprocesamiento.ipynb`
+3. `F3/notebooks/f3_formativa_complejidad.ipynb`
 
-Ambos notebooks deben correr de principio a fin sin errores
-(Kernel → Restart Kernel and Run All Cells).
+Los tres notebooks deben correr de principio a fin sin errores
+(Kernel → Restart Kernel and Run All Cells). El notebook de F3
+importa las funciones desde `src/medicion.py`.
+
+**Nota sobre las salidas:** los `.ipynb` se guardan sin salidas por
+`nbstripout` (paso 4), para mantener limpio el historial de Git. La
+ejecución completa de cada notebook, con sus salidas, está en
+`docs/evidencias/` (F1 y F2) y `F3/docs/evidencias/` (F3).
 
 ## Pipeline de la Fase 2
 
@@ -92,6 +107,38 @@ El notebook de F2 implementa un pipeline de siete etapas:
 
 Obtener → Explorar → Identificar códigos especiales → Limpiar
 → Transformar → Escalar → Validar
+
+## Avance de la Fase 3: complejidad algorítmica
+
+El notebook `F3/notebooks/f3_formativa_complejidad.ipynb` parte del
+conjunto ya procesado en la Fase 2 (`ens_procesado.csv`). No rehace la
+limpieza: se centra en medir la eficiencia del código y en decidir
+si el proyecto justifica recursividad.
+
+**Módulo `src/medicion.py`**
+
+| Función | Qué hace |
+|---|---|
+| `buscar_recorriendo` | Ubica una fila recorriendo el DataFrame con `iterrows()` |
+| `buscar_por_indice` | Ubica una fila por posición con `.iloc` |
+| `medir_tiempo` | Repite la función y devuelve el tiempo mínimo |
+| `medir_memoria` | Devuelve la memoria máxima usada (`tracemalloc`) |
+
+**Criterios de optimización aplicados**
+
+- Se comparan dos versiones del mismo cálculo (búsqueda de un
+  registro) y se verifica con `assert` que entregan el mismo resultado.
+- Cada medición se repite y se conserva el tiempo mínimo, sobre el
+  tamaño real del conjunto (5.511 filas).
+- Se mide tiempo y memoria, y se calcula el punto de equilibrio entre
+  ambos enfoques (1, 10 y 100 búsquedas).
+- La medición define la decisión: el acceso por posición resulta
+  más rápido y usa menos memoria que el recorrido, por lo que es el
+  enfoque adoptado para búsquedas repetidas.
+- **Recursividad:** no se justifica en el pipeline principal, cuya
+  secuencia de nueve pasos es fija. Solo `aplanar()` (Fase 1) es
+  recursiva, porque la profundidad del diccionario anidado no se
+  conoce de antemano.
 
 
 ## Decisiones técnicas principales
@@ -140,7 +187,7 @@ Prefijos usados: `docs`, `data`, `feat`, `fix`, `refactor`, `chore`.
 * `refactor:` Reorganización o optimización de código sin alterar sus resultados (ej. `refactor: modulariza funciones de limpieza en src/`).
 * `chore:` Tareas de mantenimiento de la estructura o del entorno (ej. `chore: actualiza dependencias en requirements.txt`).
 
-## Pendientes para la Fase 3
+## Pendientes para la siguiente fase
 
 - Confirmar contra el libro de códigos oficial F2 si GPAQ es
   efectivamente 1=Bajo, 2=Moderado, 3=Alto.
