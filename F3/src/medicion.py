@@ -1,11 +1,11 @@
 """
-Funciones de busqueda sobre el conjunto de la ENS, usadas para
-comparar dos formas de ubicar un registro dentro del DataFrame:
-recorriendo fila por fila frente a acceder directamente por
-posicion. Extraidas del notebook de la Formativa 3 (Fase 3).
+Funciones de medicion de eficiencia (tiempo y memoria), reutilizadas
+tanto en la Formativa 3 como en la Sumativa 2 sobre el pipeline
+refactorizado a clases.
 """
 
 import time
+import tracemalloc
 
 
 def buscar_recorriendo(df, posicion_buscada):
@@ -32,3 +32,12 @@ def medir_tiempo(funcion, *args, repeticiones=5):
         resultado = funcion(*args)
         tiempos.append(time.perf_counter() - inicio)
     return min(tiempos), resultado
+
+
+def medir_memoria(funcion, *args):
+    """Mide la memoria maxima usada al ejecutar la funcion."""
+    tracemalloc.start()
+    resultado = funcion(*args)
+    actual, pico = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+    return pico, resultado
