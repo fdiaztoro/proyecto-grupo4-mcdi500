@@ -90,7 +90,7 @@ el kernel **Python (grupo4-mcdi500)**:
 
 1. `F1/notebooks/S1_F1_Definicion.ipynb`
 2. `F2/notebooks/S1_F2_Preprocesamiento.ipynb`
-3. `F3/notebooks/f3_formativa_compllejidad.ipynb`
+3. `F3/notebooks/f3_formativa_complejidad.ipynb`
 
 Los tres notebooks deben correr de principio a fin sin errores
 (Kernel → Restart Kernel and Run All Cells). El notebook de F3
