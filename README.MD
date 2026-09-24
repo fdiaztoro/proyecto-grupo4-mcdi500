@@ -45,12 +45,12 @@ proyecto-grupo4-mcdi500/
 │ ├── notebooks/S1_F2_Preprocesamiento.ipynb
 │ └── docs/ Diccionario, resumen del filtro, metadatos
 ├── F3/
-│ ├── notebooks/f3_formativa_complejidad.ipynb
-│ └── docs/evidencias/ Notebook de F3 ejecutado en HTML/PDF (con salidas)
+│ └── notebooks/f3_formativa_complejidad.ipynb
 ├── src/
+│ ├── carga.py Carga y preparación del conjunto de la Fase 3
 │ └── medicion.py Funciones de búsqueda y medición de tiempo y memoria
 ├── docs/
-│ └── evidencias/ Notebooks de F1 y F2 ejecutados en HTML/PDF (con salidas)
+│ └── evidencias/ Notebooks de F1, F2 y F3 ejecutados en HTML/PDF (con salidas)
 ├── tests/ Reservado para próximas fases
 ├── .gitignore
 ├── requirements.txt
@@ -94,12 +94,12 @@ el kernel **Python (grupo4-mcdi500)**:
 
 Los tres notebooks deben correr de principio a fin sin errores
 (Kernel → Restart Kernel and Run All Cells). El notebook de F3
-importa las funciones desde `src/medicion.py`.
+importa las funciones desde `src/carga.py` y `src/medicion.py`.
 
 **Nota sobre las salidas:** los `.ipynb` se guardan sin salidas por
 `nbstripout` (paso 4), para mantener limpio el historial de Git. La
 ejecución completa de cada notebook, con sus salidas, está en
-`docs/evidencias/` (F1 y F2) y `F3/docs/evidencias/` (F3).
+`docs/evidencias/` (F1, F2 y F3).
 
 ## Pipeline de la Fase 2
 
@@ -115,26 +115,41 @@ conjunto ya procesado en la Fase 2 (`ens_procesado.csv`). No rehace la
 limpieza: se centra en medir la eficiencia del código y en decidir
 si el proyecto justifica recursividad.
 
+**Módulo `src/carga.py`**
+
+| Función | Qué hace |
+|---|---|
+| `encontrar_raiz_proyecto` | Sube por las carpetas hasta encontrar la raíz del repositorio |
+| `cargar_datos` | Lee `ens_procesado.csv` y avisa si el archivo no existe |
+| `preparar` | Agrega `clave_busqueda` (identificador sintético; `IdEncuesta` se excluyó en la Fase 2) |
+| `ejecutar` | Coordina el flujo: cargar y preparar |
+
 **Módulo `src/medicion.py`**
 
 | Función | Qué hace |
 |---|---|
-| `buscar_recorriendo` | Ubica una fila recorriendo el DataFrame con `iterrows()` |
-| `buscar_por_indice` | Ubica una fila por posición con `.iloc` |
+| `buscar_recorriendo` / `buscar_por_indice` | Acceso a una posición conocida: `iterrows()` frente a `.iloc` |
+| `buscar_iterrows_por_clave` / `buscar_vectorizado` | Búsqueda real por clave: bucle frente a operación vectorizada |
+| `construir_indice_pandas` / `buscar_indexado_pandas` | Búsqueda con `set_index` |
+| `construir_indice_dict` / `buscar_indexado_dict` | Búsqueda con diccionario nativo |
 | `medir_tiempo` | Repite la función y devuelve el tiempo mínimo |
 | `medir_memoria` | Devuelve la memoria máxima usada (`tracemalloc`) |
 
 **Criterios de optimización aplicados**
 
-- Se comparan dos versiones del mismo cálculo (búsqueda de un
-  registro) y se verifica con `assert` que entregan el mismo resultado.
+- Se comparan varias versiones del mismo cálculo y se verifica con
+  `assert` que entregan el mismo resultado.
 - Cada medición se repite y se conserva el tiempo mínimo, sobre el
   tamaño real del conjunto (5.511 filas).
-- Se mide tiempo y memoria, y se calcula el punto de equilibrio entre
-  ambos enfoques (1, 10 y 100 búsquedas).
-- La medición define la decisión: el acceso por posición resulta
-  más rápido y usa menos memoria que el recorrido, por lo que es el
-  enfoque adoptado para búsquedas repetidas.
+- Se mide tiempo y memoria. Se separa el acceso por posición
+  conocida de la búsqueda real por clave, y para esta última se
+  calcula el punto de equilibrio entre buscar de forma vectorizada y
+  construir un índice.
+- La medición define la decisión: se adopta `set_index` de pandas
+  para búsquedas repetidas, porque compensa su costo de
+  construcción prácticamente desde la primera búsqueda. El diccionario
+  nativo se descarta: necesita entre 430 y 450 búsquedas para
+  compensar su construcción.
 - **Recursividad:** no se justifica en el pipeline principal, cuya
   secuencia de nueve pasos es fija. Solo `aplanar()` (Fase 1) es
   recursiva, porque la profundidad del diccionario anidado no se
