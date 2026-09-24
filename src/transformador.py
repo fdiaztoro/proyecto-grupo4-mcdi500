@@ -1,52 +1,63 @@
-class Transformador:
-    """Clase base: lo que todos los pasos del pipeline comparten.
+"""
+Clase base del pipeline de preprocesamiento de la ENS 2016-2017.
 
-    Esta clase NO se usa directamente. Su trabajo es definir el contrato:
-    que metodos tendra todo paso del pipeline y como se controla su estado.
-    Las clases hijas solo completan lo que cambia de un paso a otro.
+Cada paso de limpieza de la Fase 2 (imputar, codificar, escalar) pasa
+a ser una subclase de Transformador. La subclase decide qué calcular
+y cómo usarlo; esta clase se encarga del orden de uso y de los errores.
+"""
+
+
+class Transformador:
+    """Interfaz común para los pasos del pipeline.
+
+    Uso esperado: primero ajustar() con el conjunto de referencia y
+    después transformar() con cualquier conjunto, usando siempre lo
+    calculado en el ajuste.
     """
 
     def __init__(self, columna):
-        # Atributo publico: cualquiera puede leerlo y cambiarlo
         self.columna = columna
-
-        # Atributos con guion bajo: por convencion, INTERNOS.
-        self._parametros = {}       # lo que el paso aprende del conjunto
-        self._ajustado = False      # controla que no se transforme antes de ajustar
+        # Estado interno: se modifica solo desde los métodos de la clase
+        self._parametros = {}
+        self._ajustado = False
 
     @property
     def nombre(self):
+        """Etiqueta legible del paso, útil en resúmenes y mensajes."""
         return f"{type(self).__name__}({self.columna})"
 
     @property
     def parametros(self):
-        # Copia defensiva: quien lee esto no puede modificar el estado interno
+        """Valores calculados en el ajuste. Se entrega una copia para
+        que nadie altere el estado del paso desde fuera."""
         return dict(self._parametros)
 
     def ajustar(self, df):
-        """Aprende los parametros del conjunto que recibe."""
+        """Calcula los parámetros del paso a partir de df."""
         if self.columna not in df.columns:
-            raise KeyError(f"{self.nombre}: la columna no existe en el conjunto.")
-
+            raise KeyError(f"{self.nombre}: '{self.columna}' no está en el conjunto.")
         self._parametros = self.aprender(df)
         self._ajustado = True
         return self
 
     def transformar(self, df):
-        """Aplica la transformacion usando lo aprendido en ajustar()."""
+        """Aplica el paso sobre una copia de df con los parámetros ya calculados."""
         if not self._ajustado:
-            raise RuntimeError(f"{self.nombre}: hay que ajustar antes de transformar.")
-
+            raise RuntimeError(f"{self.nombre}: falta llamar a ajustar().")
         return self.aplicar(df.copy())
 
     def ajustar_transformar(self, df):
-        """Atajo: aprender y aplicar sobre el mismo conjunto."""
+        """Ajusta y transforma en una sola llamada sobre el mismo conjunto."""
         return self.ajustar(df).transformar(df)
 
     def aprender(self, df):
-        """Calcula y devuelve los parametros. Lo implementa cada clase hija."""
-        raise NotImplementedError("Cada clase hija debe implementar aprender().")
+        """Cada subclase define qué calcula. Devuelve un diccionario."""
+        raise NotImplementedError(f"{type(self).__name__} no implementa aprender().")
 
     def aplicar(self, df):
-        """Aplica la transformacion. Lo implementa cada clase hija."""
-        raise NotImplementedError("Cada clase hija debe implementar aplicar().")
+        """Cada subclase define cómo usa lo calculado. Devuelve un DataFrame."""
+        raise NotImplementedError(f"{type(self).__name__} no implementa aplicar().")
+
+    def __repr__(self):
+        estado = "ajustado" if self._ajustado else "sin ajustar"
+        return f"{self.nombre} [{estado}]"
