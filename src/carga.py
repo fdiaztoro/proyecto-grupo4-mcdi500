@@ -42,4 +42,6 @@ def ejecutar(ruta):
     df = cargar_datos(ruta)
     if df is None:
         return None
-    return preparar(df)
+    df = preparar(df)
+    print(f"Preparado: {df.shape[1]} columnas (incluye clave_busqueda)")
+    return df
