@@ -7820,6 +7820,7 @@ proyecto justifica recursividad.</p>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_encontrar_raiz_temporal</span><span class="p">(</span><span class="n">marcador</span><span class="o">=</span><span class="s2">".git"</span><span class="p">):</span>
@@ -7852,7 +7853,7 @@ proyecto justifica recursividad.</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Python: 3.13.9
+<pre>Python: 3.13.7
 pandas: 3.0.5
 Raiz del proyecto: proyecto-grupo4-mcdi500
 </pre>
@@ -7861,7 +7862,7 @@ Raiz del proyecto: proyecto-grupo4-mcdi500
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=42a0f148">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7872,7 +7873,7 @@ rehacer limpieza ni transformación alguna.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=2">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7896,6 +7897,7 @@ rehacer limpieza ni transformación alguna.</p>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Cargado: 5511 filas y 23 columnas
+Preparado: 24 columnas (incluye clave_busqueda)
 </pre>
 </div>
 </div>
@@ -8073,7 +8075,7 @@ rehacer limpieza ni transformación alguna.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8085,7 +8087,7 @@ es solo el punto de partida para las mediciones de esta fase.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=4">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=5">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8130,7 +8132,7 @@ dtype: int64
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a73eb1d9">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8147,7 +8149,7 @@ posición.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8162,7 +8164,7 @@ distinta se desarrolla en la sección 3.5.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8205,7 +8207,7 @@ Encontrado por indice: True
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8218,7 +8220,7 @@ resultado antes de comparar los tiempos.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=8">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=10">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8250,9 +8252,14 @@ resultado antes de comparar los tiempos.</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Recorriendo:  0.018586 s
-Por indice:   0.000010 s
-El acceso por indice es 1914.5 veces mas rapido
+<pre>Recorriendo:  0.029845 s
+Por indice:   0.000015 s
+El acceso por indice es 1935.9 veces mas rapido
+
+Verificado: ambas versiones entregan exactamente el mismo resultado.
+
+Por indice:   0.000015 s
+El acceso por indice es 1935.9 veces mas rapido
 
 Verificado: ambas versiones entregan exactamente el mismo resultado.
 </pre>
@@ -8261,7 +8268,7 @@ Verificado: ambas versiones entregan exactamente el mismo resultado.
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=11">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8282,7 +8289,7 @@ en la sección 3.5, con una comparación que sí responde esa pregunta.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=10">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=12">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8292,11 +8299,11 @@ en la sección 3.5, con una comparación que sí responde esa pregunta.</p>
 acceso por índice suele ganar en tiempo, pero implica mantener una
 estructura adicional en memoria. Medimos ambos aspectos con
 <code>tracemalloc</code>, siguiendo la sugerencia de la retroalimentación
-recibida</p>
+recibida.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=11">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=13">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8321,7 +8328,7 @@ recibida</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Memoria maxima - recorrido: 1039.45 KB
+<pre>Memoria maxima - recorrido: 1039.68 KB
 Memoria maxima - por indice: 2.29 KB
 </pre>
 </div>
@@ -8329,7 +8336,7 @@ Memoria maxima - por indice: 2.29 KB
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=12">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=14">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8338,7 +8345,7 @@ Memoria maxima - por indice: 2.29 KB
 <h2 id="3.3.1-Interpretaci%C3%B3n-de-la-memoria">3.3.1 Interpretación de la memoria<a class="anchor-link" href="#3.3.1-Interpretaci%C3%B3n-de-la-memoria">¶</a></h2><p>Contrario a lo esperado en el caso general (donde construir un
 índice suele costar memoria adicional), en esta comparación el
 acceso por índice también resultó más eficiente en memoria: 2,29 KB
-frente a 1039.04 KB del recorrido.</p>
+frente a 1039 KB del recorrido.</p>
 <p>La explicación está en cómo opera cada función: <code>buscar_recorriendo</code>
 usa <code>iterrows()</code>, que construye una nueva <code>Series</code> de pandas en cada
 iteración del bucle -consumiendo memoria temporal en cada paso,
@@ -8355,7 +8362,7 @@ de memoria.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=13">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=15">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8366,7 +8373,7 @@ para confirmar que la diferencia de memoria no es casualidad.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=14">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=16">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8400,10 +8407,10 @@ para confirmar que la diferencia de memoria no es casualidad.</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Memoria recorrido (5 mediciones, en KB): [1039.39, 1037.46, 1037.68, 1037.46, 1037.46]
+<pre>Memoria recorrido (5 mediciones, en KB): [1039.22, 1037.68, 1037.46, 1037.46, 1037.46]
 Memoria indice    (5 mediciones, en KB): [2.1, 2.1, 2.1, 2.1, 2.1]
 
-Recorrido - minimo: 1037.46 KB, maximo: 1039.39 KB
+Recorrido - minimo: 1037.46 KB, maximo: 1039.22 KB
 Indice    - minimo: 2.10 KB, maximo: 2.10 KB
 </pre>
 </div>
@@ -8411,7 +8418,7 @@ Indice    - minimo: 2.10 KB, maximo: 2.10 KB
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=15">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=17">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8427,7 +8434,7 @@ estructural entre <code>iterrows()</code> y <code>.iloc</code> explicada arriba.
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=16">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=18">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8442,7 +8449,7 @@ estructura que debe construirse antes de usarse.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=82bce938">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=19">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8454,7 +8461,7 @@ valor determinado, sin saber de antemano dónde está.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=61eb0352">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=20">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8473,17 +8480,25 @@ valor determinado, sin saber de antemano dónde está.</p>
 <span class="n">t_iterrows</span><span class="p">,</span> <span class="n">r_iterrows</span> <span class="o">=</span> <span class="n">medir_tiempo</span><span class="p">(</span><span class="n">buscar_iterrows_por_clave</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="s2">"clave_busqueda"</span><span class="p">,</span> <span class="n">valor_buscado</span><span class="p">,</span> <span class="n">repeticiones</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">t_vectorizado</span><span class="p">,</span> <span class="n">r_vectorizado</span> <span class="o">=</span> <span class="n">medir_tiempo</span><span class="p">(</span><span class="n">buscar_vectorizado</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="s2">"clave_busqueda"</span><span class="p">,</span> <span class="n">valor_buscado</span><span class="p">)</span>
 
-<span class="n">t_construccion_pandas</span><span class="p">,</span> <span class="n">df_indexado</span> <span class="o">=</span> <span class="n">medir_tiempo</span><span class="p">(</span><span class="n">construir_indice_pandas</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="s2">"clave_busqueda"</span><span class="p">,</span> <span class="n">repeticiones</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">t_construccion_pandas</span><span class="p">,</span> <span class="n">df_indexado</span> <span class="o">=</span> <span class="n">medir_tiempo</span><span class="p">(</span><span class="n">construir_indice_pandas</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="s2">"clave_busqueda"</span><span class="p">,</span> <span class="n">repeticiones</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">t_indexado_pandas</span><span class="p">,</span> <span class="n">r_indexado_pandas</span> <span class="o">=</span> <span class="n">medir_tiempo</span><span class="p">(</span><span class="n">buscar_indexado_pandas</span><span class="p">,</span> <span class="n">df_indexado</span><span class="p">,</span> <span class="n">valor_buscado</span><span class="p">)</span>
 
-<span class="n">t_construccion_dict</span><span class="p">,</span> <span class="n">indice_dict</span> <span class="o">=</span> <span class="n">medir_tiempo</span><span class="p">(</span><span class="n">construir_indice_dict</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="s2">"clave_busqueda"</span><span class="p">,</span> <span class="n">repeticiones</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">t_indexado_dict</span><span class="p">,</span> <span class="n">r_indexado_dict</span> <span class="o">=</span> <span class="n">medir_tiempo</span><span class="p">(</span><span class="n">buscar_indexado_dict</span><span class="p">,</span> <span class="n">indice_dict</span><span class="p">,</span> <span class="n">valor_buscado</span><span class="p">)</span>
+<span class="n">t_construccion_dict</span><span class="p">,</span> <span class="n">indice_dict</span> <span class="o">=</span> <span class="n">medir_tiempo</span><span class="p">(</span><span class="n">construir_indice_dict</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="s2">"clave_busqueda"</span><span class="p">,</span> <span class="n">repeticiones</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Una búsqueda en diccionario es demasiado rápida para medirla sola:</span>
+<span class="c1"># se repite N veces y se divide para obtener el tiempo por búsqueda.</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100000</span>
+<span class="n">inicio</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">buscar_indexado_dict</span><span class="p">(</span><span class="n">indice_dict</span><span class="p">,</span> <span class="n">valor_buscado</span><span class="p">)</span>
+<span class="n">t_indexado_dict</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">inicio</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+<span class="n">r_indexado_dict</span> <span class="o">=</span> <span class="n">buscar_indexado_dict</span><span class="p">(</span><span class="n">indice_dict</span><span class="p">,</span> <span class="n">valor_buscado</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Costo de busqueda (una vez construido, si aplica) ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Iterrows:              </span><span class="si">{</span><span class="n">t_iterrows</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Vectorizado:           </span><span class="si">{</span><span class="n">t_vectorizado</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Indexado (pandas):     </span><span class="si">{</span><span class="n">t_indexado_pandas</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Indexado (dict):       </span><span class="si">{</span><span class="n">t_indexado_dict</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Indexado (dict):       </span><span class="si">{</span><span class="n">t_indexado_dict</span><span class="si">:</span><span class="s2">.9f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"=== Costo de construccion (pago unico) ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"set_index (pandas):    </span><span class="si">{</span><span class="n">t_construccion_pandas</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
@@ -8506,14 +8521,14 @@ valor determinado, sin saber de antemano dónde está.</p>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>=== Costo de busqueda (una vez construido, si aplica) ===
-Iterrows:              0.022333 s
-Vectorizado:           0.000059 s
-Indexado (pandas):     0.000010 s
-Indexado (dict):       0.000000 s
+Iterrows:              0.035714 s
+Vectorizado:           0.000088 s
+Indexado (pandas):     0.000014 s
+Indexado (dict):       0.000000095 s
 
 === Costo de construccion (pago unico) ===
-set_index (pandas):    0.000130 s
-diccionario (nativo):  0.025450 s
+set_index (pandas):    0.000067 s
+diccionario (nativo):  0.038395 s
 
 Verificado: las cuatro versiones entregan el mismo resultado.
 </pre>
@@ -8522,17 +8537,21 @@ Verificado: las cuatro versiones entregan el mismo resultado.
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c2c8266a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=21">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Punto-de-equilibrio-real">Punto de equilibrio real<a class="anchor-link" href="#Punto-de-equilibrio-real">¶</a></h3>
+<h3 id="Punto-de-equilibrio-real">Punto de equilibrio real<a class="anchor-link" href="#Punto-de-equilibrio-real">¶</a></h3><p>El siguiente bloque calcula cuántas búsquedas hacen falta para que
+construir un índice se pague. Para cada estructura (<code>set_index</code> y
+diccionario) divide su costo de construcción por lo que ahorra cada
+búsqueda frente a la versión vectorizada. Si el proyecto va a
+hacer más búsquedas que ese número, conviene construir el índice.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=af066833">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=22">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8560,46 +8579,47 @@ Verificado: las cuatro versiones entregan el mismo resultado.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>set_index (pandas): construir cuesta 0.000130s -&gt; compensa a partir de 2.6 busquedas
-diccionario (nativo): construir cuesta 0.025450s -&gt; compensa a partir de 432.6 busquedas
+<pre>set_index (pandas): construir cuesta 0.000067s -&gt; compensa a partir de 0.9 busquedas
+diccionario (nativo): construir cuesta 0.038395s -&gt; compensa a partir de 437.6 busquedas
 </pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=45d72d0f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=23">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="3.5.1-Conclusi%C3%B3n-de-la-segunda-comparaci%C3%B3n">3.5.1 Conclusión de la segunda comparación<a class="anchor-link" href="#3.5.1-Conclusi%C3%B3n-de-la-segunda-comparaci%C3%B3n">¶</a></h2><h2 id="3.5.1-Conclusi%C3%B3n-de-la-segunda-comparaci%C3%B3n">3.5.1 Conclusión de la segunda comparación<a class="anchor-link" href="#3.5.1-Conclusi%C3%B3n-de-la-segunda-comparaci%C3%B3n">¶</a></h2><p>Separar la búsqueda real (esta sección) del acceso por posición
+<h2 id="3.5.1-Conclusi%C3%B3n-de-la-segunda-comparaci%C3%B3n">3.5.1 Conclusión de la segunda comparación<a class="anchor-link" href="#3.5.1-Conclusi%C3%B3n-de-la-segunda-comparaci%C3%B3n">¶</a></h2><p>Separar la búsqueda real (esta sección) del acceso por posición
 (sección 3) muestra que gran parte de la diferencia original se
 debía a la sobrecarga de <code>iterrows()</code>, no a la estrategia de
 búsqueda en sí: la versión vectorizada, aun siendo O(n), ya es
-~379 veces más rápida que el recorrido con <code>iterrows()</code>.</p>
+unas 400 veces más rápida que el recorrido con <code>iterrows()</code>.</p>
 <p>El punto de equilibrio real existe entre la búsqueda vectorizada y
 la indexada, porque solo la indexación paga un costo de
 construcción inicial. <code>set_index</code> de pandas compensa su costo
-desde apenas 2,6 búsquedas, mientras que un diccionario nativo,
-aunque ofrece la búsqueda más rápida de las cuatro, requiere
-alrededor de 433 búsquedas para justificar el costo de construirlo
-recorriendo el DataFrame con <code>iterrows()</code>. Esto muestra que la
-mejor estructura no depende solo de la velocidad final, sino
-también de cuántas veces se va a usar.</p>
+prácticamente desde la primera búsqueda (en esta ejecución, menos de
+una), mientras que un diccionario nativo, aunque ofrece la búsqueda
+más rápida de las cuatro, requiere entre 430 y 450 búsquedas para
+justificar el costo de construirlo recorriendo el DataFrame con
+<code>iterrows()</code>. Esto muestra que la mejor estructura no depende solo
+de la velocidad final, sino también de cuántas veces se va a usar.</p>
 <p><strong>Decisión adoptada:</strong> se adopta <code>set_index</code> de pandas para
 cualquier búsqueda repetida sobre el conjunto. Aunque el diccionario
 nativo ofrece la búsqueda más rápida de las cuatro alternativas, su
-costo de construcción (~433 búsquedas para compensarse) lo hace
-menos práctico que <code>set_index</code>, que compensa su costo desde apenas
-2,6 búsquedas — un umbral que el proyecto supera ampliamente al
-validar cruces entre variables como <code>as27</code> y <code>as28</code>.</p>
+costo de construcción (entre 430 y 450 búsquedas para compensarse) lo
+hace menos práctico que <code>set_index</code>, que se paga desde la primera
+búsqueda. Como el proyecto necesita ubicar registros repetidamente
+al validar cruces entre variables como <code>as27</code> y <code>as28</code>, <code>set_index</code>
+es la opción más conveniente.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=19">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=24">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8610,7 +8630,7 @@ de la Fase 2 tiene un problema que la justifique.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=20">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=25">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8662,7 +8682,7 @@ de la Fase 2 tiene un problema que la justifique.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=21">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=26">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8683,43 +8703,8 @@ sin necesidad de escribir un bucle distinto para cada caso.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=3486f8fb">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">t_construccion</span><span class="p">,</span> <span class="n">t_indexado</span> <span class="ow">in</span> <span class="p">[</span>
-    <span class="p">(</span><span class="s2">"set_index (pandas)"</span><span class="p">,</span> <span class="n">t_construccion_pandas</span><span class="p">,</span> <span class="n">t_indexado_pandas</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">"diccionario (nativo)"</span><span class="p">,</span> <span class="n">t_construccion_dict</span><span class="p">,</span> <span class="n">t_indexado_dict</span><span class="p">),</span>
-<span class="p">]:</span>
-    <span class="n">diferencia</span> <span class="o">=</span> <span class="n">t_vectorizado</span> <span class="o">-</span> <span class="n">t_indexado</span>
-    <span class="n">equilibrio</span> <span class="o">=</span> <span class="n">t_construccion</span> <span class="o">/</span> <span class="n">diferencia</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s2">: construir cuesta </span><span class="si">{</span><span class="n">t_construccion</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">s -&gt; "</span>
-          <span class="sa">f</span><span class="s2">"compensa a partir de </span><span class="si">{</span><span class="n">equilibrio</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> busquedas"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>set_index (pandas): construir cuesta 0.000130s -&gt; compensa a partir de 2.6 busquedas
-diccionario (nativo): construir cuesta 0.025450s -&gt; compensa a partir de 432.6 busquedas
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d71fdea7">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=28">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8728,7 +8713,7 @@ diccionario (nativo): construir cuesta 0.025450s -&gt; compensa a partir de 432.
 <h2 id="5.-Referencia-al-foro-t%C3%A9cnico">5. Referencia al foro técnico<a class="anchor-link" href="#5.-Referencia-al-foro-t%C3%A9cnico">¶</a></h2><p>En el foro técnico de la semana comentamos que una comparación de
 eficiencia puede parecer válida aunque esté midiendo algo distinto
 de lo que se cree, y que el tamaño de una diferencia (por ejemplo,
-"1.700 veces más rápido") no garantiza por sí solo que la
+"2.000 veces más rápido") no garantiza por sí solo que la
 comparación esté bien diseñada.</p>
 <p>A partir de esa discusión, revisamos nuestra propia comparación
 inicial (<code>iterrows()</code> frente a <code>.iloc</code>) y encontramos que mezclaba
@@ -8737,16 +8722,6 @@ la sobrecarga propia de <code>iterrows()</code>. Aplicamos lo discutido
 separando ambos problemas en las secciones 3 y 3.5 de este
 notebook, lo que nos permitió calcular un punto de equilibrio real
 y tomar una decisión de diseño fundamentada.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=22">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 </div>
 </div>
 </div>
