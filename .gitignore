@@ -29,3 +29,4 @@ F1/data/*
 
 # Archivos de bloqueo temporal de Microsoft Office (se crean al abrir un .xlsx/.docx)
 ~$*
+data/raw/ens2016.xlsx
