@@ -1,4 +1,5 @@
-from src.transformador import Transformador
+import pandas as pd
+from transformador import Transformador
 
 MAPEO_CATEGORIAS = {
     "Sexo": {
@@ -58,6 +59,20 @@ class CodificadorOneHot(Transformador):
     def aplicar(self, df):
         categorias = self._parametros["categorias"]
 
+        valores_observados = set(
+            df[self.columna].dropna().unique()
+        )
+        valores_validos = set(categorias.keys())
+
+        desconocidos = valores_observados - valores_validos
+
+        if desconocidos:
+            raise ValueError(
+                f"{self.nombre}: se encontraron códigos "
+                f"no reconocidos durante la transformación: "
+                f"{sorted(desconocidos)}"
+            )
+
         for codigo, nombre in categorias.items():
             nombre_columna = f"{self.columna}_{nombre}"
 
@@ -84,9 +99,10 @@ class EscaladorEstandar(Transformador):
         media = serie.mean()
         desviacion = serie.std(ddof=0)
 
-        if desviacion == 0:
+        if pd.isna(desviacion) or desviacion == 0:
             raise ValueError(
-                f"{self.nombre}: la desviación estándar es cero."
+                f"{self.nombre}: la desviación estándar "
+                f"es cero o no está definida."
             )
 
         return {
@@ -103,3 +119,55 @@ class EscaladorEstandar(Transformador):
         )
 
         return df
+    
+class EliminadorColumnas:
+    """
+    Elimina columnas que no forman parte del conjunto procesado final.
+    """
+
+    def __init__(self, columnas):
+        self.columnas = columnas
+
+    def transformar(self, df):
+        faltantes = [
+            columna for columna in self.columnas
+            if columna not in df.columns
+        ]
+
+        if faltantes:
+            raise KeyError(
+                f"No se encontraron las columnas: {faltantes}"
+            )
+
+        return df.drop(columns=self.columnas).copy()
+
+
+class ConvertidorEntero:
+    """
+    Convierte variables categóricas u ordinales a tipo entero,
+    validando previamente la ausencia de valores nulos.
+    """
+
+    def __init__(self, columnas):
+        self.columnas = columnas
+
+    def transformar(self, df):
+        resultado = df.copy()
+
+        for columna in self.columnas:
+            if columna not in resultado.columns:
+                raise KeyError(
+                    f"No se encontró la columna: {columna}"
+                )
+
+            if resultado[columna].isna().any():
+                raise ValueError(
+                    f"La columna '{columna}' contiene valores nulos "
+                    "y no puede convertirse directamente a entero."
+                )
+
+            resultado[columna] = resultado[columna].astype(int)
+
+        return resultado
+    
+
