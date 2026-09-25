@@ -120,54 +120,35 @@ class EscaladorEstandar(Transformador):
 
         return df
     
-class EliminadorColumnas:
+    
+class EliminadorColumna(Transformador):
     """
-    Elimina columnas que no forman parte del conjunto procesado final.
+    Elimina una columna que no forma parte del conjunto procesado final.
     """
 
-    def __init__(self, columnas):
-        self.columnas = columnas
+    def aprender(self, df):
+        return {}
 
-    def transformar(self, df):
-        faltantes = [
-            columna for columna in self.columnas
-            if columna not in df.columns
-        ]
+    def aplicar(self, df):
+        return df.drop(columns=[self.columna])
 
-        if faltantes:
-            raise KeyError(
-                f"No se encontraron las columnas: {faltantes}"
+
+class ConvertidorEntero(Transformador):
+    """
+    Convierte una columna a tipo entero, validando previamente
+    que no contenga valores nulos.
+    """
+
+    def aprender(self, df):
+        if df[self.columna].isna().any():
+            raise ValueError(
+                f"{self.nombre}: la columna tiene nulos "
+                "y no puede convertirse a entero."
             )
 
-        return df.drop(columns=self.columnas).copy()
+        return {}
 
-
-class ConvertidorEntero:
-    """
-    Convierte variables categóricas u ordinales a tipo entero,
-    validando previamente la ausencia de valores nulos.
-    """
-
-    def __init__(self, columnas):
-        self.columnas = columnas
-
-    def transformar(self, df):
-        resultado = df.copy()
-
-        for columna in self.columnas:
-            if columna not in resultado.columns:
-                raise KeyError(
-                    f"No se encontró la columna: {columna}"
-                )
-
-            if resultado[columna].isna().any():
-                raise ValueError(
-                    f"La columna '{columna}' contiene valores nulos "
-                    "y no puede convertirse directamente a entero."
-                )
-
-            resultado[columna] = resultado[columna].astype(int)
-
-        return resultado
+    def aplicar(self, df):
+        df[self.columna] = df[self.columna].astype(int)
+        return df
     
-

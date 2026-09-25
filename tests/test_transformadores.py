@@ -11,6 +11,8 @@ sys.path.insert(
 from transformadores import (
     CodificadorOneHot,
     EscaladorEstandar,
+    EliminadorColumna,
+    ConvertidorEntero,
 )
 def test_codificador_onehot_sexo():
     """Verifica la codificación correcta de la variable Sexo."""
@@ -170,3 +172,28 @@ def test_codificador_nombres_dis2():
 
     assert columnas_esperadas.issubset(resultado.columns)
     assert "dis2" not in resultado.columns
+
+def test_eliminador_columna():
+    """Verifica que EliminadorColumna elimine la columna indicada."""
+    df = pd.DataFrame({
+        "IdEncuesta": [1, 2, 3],
+        "Edad": [20, 30, 40],
+    })
+
+    eliminador = EliminadorColumna("IdEncuesta")
+    resultado = eliminador.ajustar_transformar(df)
+
+    assert "IdEncuesta" not in resultado.columns
+    assert "Edad" in resultado.columns
+
+
+def test_convertidor_entero_con_nulos():
+    """Verifica que ConvertidorEntero rechace columnas con nulos."""
+    df = pd.DataFrame({
+        "HTA": [1.0, None, 0.0]
+    })
+
+    convertidor = ConvertidorEntero("HTA")
+
+    with pytest.raises(ValueError):
+        convertidor.ajustar(df)
