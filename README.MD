@@ -45,13 +45,23 @@ proyecto-grupo4-mcdi500/
 │ ├── notebooks/S1_F2_Preprocesamiento.ipynb
 │ └── docs/ Diccionario, resumen del filtro, metadatos
 ├── F3/
-│ └── notebooks/f3_formativa_complejidad.ipynb
+│ └── notebooks/
+│   ├── f3_formativa_complejidad.ipynb Formativa 3: complejidad algorítmica
+│   └── S2_F3_NucleoAlgoritmico_Eficiencia_POO.ipynb Sumativa 2: preprocesamiento en clases (POO)
 ├── src/
 │ ├── carga.py Carga y preparación del conjunto de la Fase 3
-│ └── medicion.py Funciones de búsqueda y medición de tiempo y memoria
+│ ├── medicion.py Funciones de búsqueda y medición de tiempo y memoria
+│ ├── transformador.py Clase base Transformador (ajustar / transformar)
+│ ├── imputadores.py No respuesta, eliminación de filas e imputación (patrón Strategy)
+│ ├── transformadores.py Codificación one-hot, escalamiento, eliminación de columnas y conversión a entero
+│ ├── pipeline.py Encadena los pasos del preprocesamiento en orden
+│ └── validador.py Valida el resultado y lo compara con la Fase 2
 ├── docs/
 │ └── evidencias/ Notebooks de F1, F2 y F3 ejecutados en HTML/PDF (con salidas)
-├── tests/ Reservado para próximas fases
+├── tests/
+│ ├── casos_por_clase.py Pruebas por clase: normal, límite y excepción
+│ ├── test_casos_por_clase.py Ejecuta esas pruebas con pytest
+│ └── test_transformadores.py Pruebas de los transformadores con pytest
 ├── .gitignore
 ├── requirements.txt
 └── README.MD
@@ -60,7 +70,7 @@ proyecto-grupo4-mcdi500/
 
 ## Requisitos y ejecución
 
-Python 3.13.X
+Python 3.13 o superior
 
 ```bash
 # 1. Clonar repositorio e ingresar a la carpeta
@@ -85,21 +95,58 @@ git config filter.nbstripout.extrakeys "metadata.language_info.version metadata.
 python -m ipykernel install --user --name grupo4_mcdi500 --display-name "Python (grupo4-mcdi500)"
 ```
 
+### Dependencias
+
+Todas están en `requirements.txt`, con versión fija:
+
+| Grupo | Paquetes | Para qué |
+|---|---|---|
+| Núcleo de datos | numpy, pandas, openpyxl | Carga y transformación de los datos (incluye leer `.xlsx`) |
+| Visualización | matplotlib, seaborn | Gráficos de los notebooks |
+| Modelado | scikit-learn, scipy | `StandardScaler` de scikit-learn se usa en la Sumativa 2 como referencia para comparar el escalador propio |
+| Pruebas | pytest | Ejecutar las pruebas de `tests/` |
+| Jupyter y Git | jupyterlab, notebook, ipykernel, jupyterlab-git, jupytext, nbstripout | Entorno de notebooks e higiene del historial |
+
+### Ejecución de los notebooks
+
 Abrir JupyterLab (o VS Code) y ejecutar, en este orden, seleccionando
 el kernel **Python (grupo4-mcdi500)**:
 
 1. `F1/notebooks/S1_F1_Definicion.ipynb`
 2. `F2/notebooks/S1_F2_Preprocesamiento.ipynb`
 3. `F3/notebooks/f3_formativa_complejidad.ipynb`
+4. `F3/notebooks/S2_F3_NucleoAlgoritmico_Eficiencia_POO.ipynb`
 
-Los tres notebooks deben correr de principio a fin sin errores
-(Kernel → Restart Kernel and Run All Cells). El notebook de F3
-importa las funciones desde `src/carga.py` y `src/medicion.py`.
+Los notebooks deben correr de principio a fin sin errores
+(Kernel → Restart Kernel and Run All Cells). Los notebooks de F3
+importan su código desde `src/`: la formativa usa `carga.py` y
+`medicion.py`; el de la Sumativa 2 usa además las clases de
+`transformador.py`, `imputadores.py` y `transformadores.py`.
 
 **Nota sobre las salidas:** los `.ipynb` se guardan sin salidas por
 `nbstripout` (paso 4), para mantener limpio el historial de Git. La
 ejecución completa de cada notebook, con sus salidas, está en
 `docs/evidencias/` (F1, F2 y F3).
+
+### Pruebas automatizadas
+
+Las pruebas están en `tests/` y se ejecutan con `pytest` desde la raíz del repositorio:
+
+```bash
+python -m pytest tests/ -q                         # todas las pruebas
+python -m pytest tests/ -v -k CodificadorOneHot    # solo las de una clase
+python -m pytest tests/ -v -k excepcion            # solo un escenario
+```
+
+- `tests/casos_por_clase.py`: pruebas de cada clase del pipeline en tres
+  escenarios (normal, límite y excepción). Desde un notebook, con `src/` y
+  `tests/` en `sys.path`, `ejecutar_pruebas()` entrega el mismo resultado
+  como informe en tabla.
+- `tests/test_transformadores.py`: pruebas de los transformadores de
+  codificación y escalamiento.
+- `src/validador.py` no contiene pruebas unitarias: valida el conjunto final
+  y lo compara con `data/processed/ens_procesado.csv` de la Fase 2
+  (`pd.testing.assert_frame_equal`).
 
 ## Pipeline de la Fase 2
 

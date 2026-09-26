@@ -8,7 +8,7 @@ y transformar().
 
 import pandas as pd
 
-from transformador import Transformador
+from src.transformador import Transformador
 
 
 class Pipeline:

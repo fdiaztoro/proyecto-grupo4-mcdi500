@@ -6,6 +6,7 @@ refactorizado a clases.
 
 import time
 import tracemalloc
+import timeit
 
 
 def buscar_recorriendo(df, posicion_buscada):
@@ -80,3 +81,19 @@ def buscar_indexado_pandas(df_indexado, valor):
 def buscar_indexado_dict(indice_dict, valor):
     """Busqueda O(1) sobre un diccionario ya construido."""
     return indice_dict.get(valor)
+
+def medir_tiempo_timeit(funcion, *args, numero=20, repeticiones=5):
+    """
+    Mide el tiempo promedio por llamada utilizando timeit.
+
+    Ejecuta varios bloques de mediciones y devuelve el mejor tiempo
+    promedio por ejecución, reduciendo el efecto de variaciones
+    externas del sistema.
+    """
+    tiempos = timeit.repeat(
+        lambda: funcion(*args),
+        number=numero,
+        repeat=repeticiones
+    )
+
+    return min(tiempos) / numero
