@@ -21,7 +21,8 @@ anaconda_projects/
 F1/data/*
 !F1/data/.gitkeep
 
-# F2: base original y procesados SI se versionan (livianos, dan reproducibilidad)
+# F2: los procesados SI se versionan (livianos); la base original (13,6 MB) no: ver README
+data/raw/ens2016.xlsx
 
 # Datos pesados y modelos
 *.ckpt
@@ -29,4 +30,3 @@ F1/data/*
 
 # Archivos de bloqueo temporal de Microsoft Office (se crean al abrir un .xlsx/.docx)
 ~$*
-data/raw/ens2016.xlsx

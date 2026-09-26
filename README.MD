@@ -22,14 +22,24 @@ de la ENS 2016-2017?
 
 - **Fuente:** Encuesta Nacional de Salud (ENS) 2016-2017, Ministerio
   de Salud de Chile (MINSAL).
-- **Archivo base:** `data/raw/ens2016.xlsx` (6.233 registros, 1.173
-  columnas originales). Incluido en el repositorio, sin modificar.
+- **Archivo base (no versionado):** `data/raw/ens2016.xlsx` (6.233
+  registros, 1.173 columnas originales, 13,6 MB). Por su tamaño no se
+  incluye en el repositorio (está en `.gitignore`). Para ejecutar F1 y
+  F2, descargue la «Base Formulario 1-Formulario 2 y exámenes» de la
+  ENS 2016-2017 desde la sección Bases de datos del Departamento de
+  Epidemiología del MINSAL (<https://epi.minsal.cl/bases-de-datos/>). Si
+  la descarga no viene en Excel, conviértala a `.xlsx` (hoja `Sheet1`)
+  y guárdela como `data/raw/ens2016.xlsx`. Los notebooks de F3 no lo
+  necesitan: parten de los archivos de `data/processed/`, que sí están
+  en el repositorio.
 - **Subconjunto seleccionado:** `data/processed/ens_variables_seleccionadas.xlsx`
   (16 variables, 6.233 filas).
 - **Subconjunto elegible F1-F2:** `data/processed/ens_variables_f1f2.xlsx`
   (5.520 filas, filtrado por el ponderador `Fexp_F1F2p_Corr`).
-- **Subconjunto procesado final:** `data/processed/ens_procesado.csv`
-  (5.511 filas, 23 columnas, limpio y listo para la Fase 3).
+- **Subconjunto procesado final (vigente):** `data/processed/ens_procesado.csv`
+  (5.511 filas, 23 columnas, limpio y listo para la Fase 3). El papel de
+  cada archivo de `data/processed/` se detalla en
+  `data/processed/README.md`.
 - **Ponderador utilizado:** `Fexp_F1F2p_Corr` (componente combinado F1-F2).
 
 ## Estructura del repositorio
@@ -37,7 +47,7 @@ de la ENS 2016-2017?
 ```
 proyecto-grupo4-mcdi500/
 ├── data/
-│ ├── raw/ens2016.xlsx Base original, sin modificar
+│ ├── raw/ens2016.xlsx Base original (no versionada: descargar, ver «Datos»)
 │ └── processed/ Subconjuntos generados por código
 ├── F1/
 │ └── notebooks/S1_F1_Definicion.ipynb
@@ -117,6 +127,9 @@ el kernel **Python (grupo4-mcdi500)**:
 3. `F3/notebooks/f3_formativa_complejidad.ipynb`
 4. `F3/notebooks/S2_F3_NucleoAlgoritmico_Eficiencia_POO.ipynb`
 
+F1 y F2 leen `data/raw/ens2016.xlsx`, que no está en el repositorio (ver
+«Datos»). Los notebooks de F3 se pueden ejecutar sin ese archivo.
+
 Los notebooks deben correr de principio a fin sin errores
 (Kernel → Restart Kernel and Run All Cells). Los notebooks de F3
 importan su código desde `src/`: la formativa usa `carga.py` y
@@ -155,7 +168,13 @@ El notebook de F2 implementa un pipeline de siete etapas:
 Obtener → Explorar → Identificar códigos especiales → Limpiar
 → Transformar → Escalar → Validar
 
-## Avance de la Fase 3: complejidad algorítmica
+## Fase 3: complejidad algorítmica y programación orientada a objetos
+
+La Fase 3 tiene dos notebooks: la Formativa 3 (mide el costo de distintas
+formas de buscar un registro) y la Sumativa 2 (reescribe el preprocesamiento
+de la Fase 2 como clases). Los dos comparten el código de `src/`.
+
+### Formativa 3: complejidad algorítmica
 
 El notebook `F3/notebooks/f3_formativa_complejidad.ipynb` parte del
 conjunto ya procesado en la Fase 2 (`ens_procesado.csv`). No rehace la
@@ -195,13 +214,55 @@ si el proyecto justifica recursividad.
 - La medición define la decisión: se adopta `set_index` de pandas
   para búsquedas repetidas, porque compensa su costo de
   construcción prácticamente desde la primera búsqueda. El diccionario
-  nativo se descarta: necesita entre 430 y 450 búsquedas para
-  compensar su construcción.
+  nativo también se paga, pero necesita del orden de cien búsquedas
+  cuando se arma con `dict(zip(...))` (con `iterrows()` eran más de
+  400: la construcción, y no el diccionario, era lo que encarecía la
+  comparación).
 - **Recursividad:** no se justifica en el pipeline principal, cuya
-  secuencia de nueve pasos es fija. Solo `aplanar()` (Fase 1) es
+  secuencia es fija y conocida (las nueve decisiones de la Fase 2, que
+  en la Sumativa 2 son 17 pasos). Solo `aplanar()` (Fase 2) es
   recursiva, porque la profundidad del diccionario anidado no se
   conoce de antemano.
 
+
+### Sumativa 2: preprocesamiento en clases
+
+El notebook `F3/notebooks/S2_F3_NucleoAlgoritmico_Eficiencia_POO.ipynb`
+parte de `ens_variables_f1f2.xlsx` (5.520 filas, antes de limpiar) y
+reescribe cada paso de la Fase 2 como una clase. El criterio de éxito es
+que el pipeline produzca exactamente `ens_procesado.csv` (5.511 filas ×
+23 columnas); el notebook lo verifica valor por valor con
+`verificar_contra_fase2`.
+
+Secciones del notebook: 1 carga · 2 pipeline en clases (imputación,
+encapsulamiento y herencia) · 3 validación (59 pruebas: normal, límite y
+excepción) · 4 codificación · 5 escalamiento · 6 eficiencia (`timeit` y
+`tracemalloc`) · 7 patrón Strategy en la imputación · 8 arquitectura y
+conclusiones.
+
+| Módulo | Contenido |
+|---|---|
+| `src/transformador.py` | Clase base `Transformador`: `ajustar()` calcula parámetros y `transformar()` los aplica sobre una copia; el estado queda en atributos internos |
+| `src/imputadores.py` | `MarcadorNoRespuesta`, `EliminadorFilasNulas` e `ImputadorFlexible`, que recibe una estrategia (`PorMedia`, `PorMediana`, `PorModa`, `PorMedianaDeTramo`) |
+| `src/transformadores.py` | `CodificadorOneHot`, `EscaladorEstandar`, `EliminadorColumna` y `ConvertidorEntero` |
+| `src/pipeline.py` | `Pipeline`: ajusta y aplica los pasos en orden, sin conocer su tipo |
+| `src/validador.py` | `verificar_contra_fase2` y funciones para comparar resultados |
+
+**Decisiones de diseño de la Fase 3**
+
+- **El orden de los pasos importa.** Las 9 filas sin `HTA` se eliminan
+  antes de imputar: si se imputa antes, la mediana del IMC cambia
+  (28,3167 en vez de 28,3124) y el resultado deja de coincidir con la
+  Fase 2.
+- **Patrón Strategy en la imputación.** Cada forma de rellenar es una
+  clase intercambiable. Para `as27`: la media y la mediana reducen la
+  dispersión cerca de un 9 % (rellenan también a quienes no declararon
+  ingreso); la mediana por tramo casi no la altera (−0,70 %) pero solo
+  rellena 177 casos y deja 816 sin valor.
+- **División funcional en lugar de recursividad:** el pipeline es una
+  secuencia fija; cada transformación es una clase independiente.
+- **Extensibilidad:** un paso nuevo se agrega sin modificar `Pipeline`
+  ni las clases existentes (demostrado en el notebook).
 
 ## Decisiones técnicas principales
 
@@ -249,12 +310,28 @@ Prefijos usados: `docs`, `data`, `feat`, `fix`, `refactor`, `chore`.
 * `refactor:` Reorganización o optimización de código sin alterar sus resultados (ej. `refactor: modulariza funciones de limpieza en src/`).
 * `chore:` Tareas de mantenimiento de la estructura o del entorno (ej. `chore: actualiza dependencias en requirements.txt`).
 
-## Pendientes para la siguiente fase
+## Fase 4: qué deja listo la Fase 3 y qué queda por decidir
 
-- Confirmar contra el libro de códigos oficial F2 si GPAQ es
-  efectivamente 1=Bajo, 2=Moderado, 3=Alto.
-- Decidir si as27 debe escalarse con RobustScaler en vez de
-  StandardScaler, dada su asimetría.
-- Definir si el análisis usará Conglomerado, Estrato y
-  Fexp_F1F2p_Corr para un diseño muestral complejo, o solo el
+**Lo que queda listo**
+
+- Un pipeline reproducible, validado con 59 pruebas por clase y con
+  igualdad exacta frente a `ens_procesado.csv`, que sigue siendo el
+  archivo vigente para el análisis (ver `data/processed/README.md`).
+- El conjunto final de 5.511 personas y 23 variables, con las banderas
+  `as28_no_responde` y `as27_imputado` y las columnas del diseño muestral
+  (`Fexp_F1F2p_Corr`, `Conglomerado`, `Estrato`) sin transformar.
+- Cada paso es una clase: cambiar un tratamiento es reemplazar un paso
+  de la lista, sin reescribir el resto.
+
+**Decisiones abiertas**
+
+- Definir si el análisis usará `Conglomerado`, `Estrato` y
+  `Fexp_F1F2p_Corr` para un diseño muestral complejo, o solo el
   ponderador de forma simple.
+- Decidir si `as27` debe escalarse con `RobustScaler` en vez de
+  `StandardScaler`, dada su asimetría.
+- Definir cómo se tratan en el análisis las 816 personas sin ingreso
+  declarado (sin `as27` ni `as28`), que quedan sin valor a propósito
+  porque su no respuesta podría no ser aleatoria.
+- Confirmar contra el libro de códigos oficial F2 si `GPAQ` es
+  efectivamente 1=Bajo, 2=Moderado, 3=Alto.
