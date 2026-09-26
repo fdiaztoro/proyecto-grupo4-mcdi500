@@ -1,4 +1,5 @@
-from src.transformador import Transformador
+import pandas as pd
+from transformador import Transformador
 
 MAPEO_CATEGORIAS = {
     "Sexo": {
@@ -58,6 +59,20 @@ class CodificadorOneHot(Transformador):
     def aplicar(self, df):
         categorias = self._parametros["categorias"]
 
+        valores_observados = set(
+            df[self.columna].dropna().unique()
+        )
+        valores_validos = set(categorias.keys())
+
+        desconocidos = valores_observados - valores_validos
+
+        if desconocidos:
+            raise ValueError(
+                f"{self.nombre}: se encontraron códigos "
+                f"no reconocidos durante la transformación: "
+                f"{sorted(desconocidos)}"
+            )
+
         for codigo, nombre in categorias.items():
             nombre_columna = f"{self.columna}_{nombre}"
 
@@ -84,9 +99,10 @@ class EscaladorEstandar(Transformador):
         media = serie.mean()
         desviacion = serie.std(ddof=0)
 
-        if desviacion == 0:
+        if pd.isna(desviacion) or desviacion == 0:
             raise ValueError(
-                f"{self.nombre}: la desviación estándar es cero."
+                f"{self.nombre}: la desviación estándar "
+                f"es cero o no está definida."
             )
 
         return {
@@ -103,3 +119,36 @@ class EscaladorEstandar(Transformador):
         )
 
         return df
+    
+    
+class EliminadorColumna(Transformador):
+    """
+    Elimina una columna que no forma parte del conjunto procesado final.
+    """
+
+    def aprender(self, df):
+        return {}
+
+    def aplicar(self, df):
+        return df.drop(columns=[self.columna])
+
+
+class ConvertidorEntero(Transformador):
+    """
+    Convierte una columna a tipo entero, validando previamente
+    que no contenga valores nulos.
+    """
+
+    def aprender(self, df):
+        if df[self.columna].isna().any():
+            raise ValueError(
+                f"{self.nombre}: la columna tiene nulos "
+                "y no puede convertirse a entero."
+            )
+
+        return {}
+
+    def aplicar(self, df):
+        df[self.columna] = df[self.columna].astype(int)
+        return df
+    
