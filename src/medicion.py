@@ -66,8 +66,16 @@ def construir_indice_pandas(df, clave):
 
 
 def construir_indice_dict(df, clave):
-    """Costo de construccion usando un diccionario nativo de Python."""
-    return {fila[clave]: fila for _, fila in df.iterrows()}
+    """Costo de construccion usando un diccionario nativo de Python.
+
+    Se evita iterrows(): cada iteracion de iterrows crea una Serie por
+    fila, lo que encarece la construccion sin necesidad. dict(zip(...))
+    empareja las claves con los registros ya extraidos por to_dict(),
+    evitando ese costo por fila.
+    """
+    claves = df[clave]
+    filas = df.to_dict("records")
+    return dict(zip(claves, filas))
 
 
 def buscar_indexado_pandas(df_indexado, valor):
