@@ -20,8 +20,23 @@ Los tres escenarios de prueba, en simple:
                dato, un pipeline vacío...). No deben fallar ni dar resultados raros.
   - excepción: entradas incorrectas. Deben fallar con un error claro.
 
-No importa las clases de codificación ni de escalamiento: el pipeline se recibe
-como parámetro, así este módulo no depende de cómo se llamen.
+Clases probadas (13), agrupadas por archivo y en el mismo orden en que aparecen
+en el informe de ejecutar_pruebas():
+  - transformador.py:   Transformador (clase base).
+  - imputadores.py:     MarcadorNoRespuesta, EliminadorFilasNulas, PorMedia,
+                        PorMediana, PorModa, PorMedianaDeTramo, ImputadorFlexible.
+  - transformadores.py: EliminadorColumna, ConvertidorEntero, CodificadorOneHot,
+                        EscaladorEstandar.
+  - pipeline.py:        Pipeline.
+
+Las pruebas usan tablas pequeñas escritas a mano, donde el resultado correcto se
+puede calcular de memoria. Complementan (no reemplazan) las pruebas con pytest de
+tests/test_transformadores.py: aquí se ordenan por clase y escenario y se
+entregan como informe, que es la evidencia que pide la rúbrica.
+
+El pipeline completo no se construye aquí: validar_resultado() y
+verificar_contra_fase2() lo reciben como parámetro. Así este módulo solo valida
+y no decide qué pasos tiene el preprocesamiento (bajo acoplamiento).
 """
 
 import numpy as np
@@ -33,6 +48,9 @@ from imputadores import (
 )
 from pipeline import Pipeline
 from transformador import Transformador
+from transformadores import (
+    CodificadorOneHot, ConvertidorEntero, EliminadorColumna, EscaladorEstandar,
+)
 
 
 # Valores que dejó documentados la Fase 2 (ver README y F2/notebooks).
@@ -45,6 +63,8 @@ NULOS_FASE2 = {"as27": 816, "as28": 816}
 # Columnas que la Fase 2 elimina del resultado final.
 COLUMNAS_EXCLUIDAS_FASE2 = ("IdEncuesta", "FechaInicioF1")
 # Columnas 0/1 (one-hot): en cada fila, las de un mismo grupo deben sumar exactamente 1.
+# Se escriben a mano (no se leen de MAPEO_CATEGORIAS) para que la validación sea
+# independiente del código que valida: si alguien cambia un nombre allá, esto lo detecta.
 GRUPOS_ONE_HOT_FASE2 = {
     "Sexo": ["Sexo_Hombre", "Sexo_Mujer"],
     "Zona": ["Zona_Urbano", "Zona_Rural"],
@@ -187,6 +207,18 @@ def _transformador_sin_ajustar():
     """
     datos = pd.DataFrame({"x": [1]})
     return _debe_lanzar(RuntimeError, lambda: _PasoDoblador("x").transformar(datos), "ajustar")
+
+
+@prueba("Transformador", "excepcion")
+def _transformador_columna_inexistente():
+    """Ajustar con una columna que no existe lanza KeyError.
+
+    En simple: si el paso apunta a una columna que no está en los datos, debe
+    fallar al ajustar con KeyError. Este control vive en la clase base, así que
+    todas las clases hijas lo heredan sin escribirlo de nuevo.
+    """
+    datos = pd.DataFrame({"x": [1]})
+    return _debe_lanzar(KeyError, lambda: _PasoDoblador("otra").ajustar(datos), "no está")
 
 
 @prueba("Transformador", "excepcion")
@@ -480,6 +512,21 @@ def _tramo_fila_sin_tramo():
     assert salida["monto_imputado"].tolist() == [0, 1, 0]
 
 
+@prueba("PorMedianaDeTramo", "limite")
+def _tramo_sin_ningun_valor():
+    """Si un tramo no tiene ningún monto, sus filas quedan nulas y sin marca.
+
+    En simple: el tramo 2 no tiene ni un monto conocido, así que no hay mediana
+    con qué rellenar. Sus filas quedan vacías (sin inventar un valor) y no se
+    marcan como imputadas. El tramo 1 sí se rellena con su mediana (10).
+    """
+    datos = pd.DataFrame({"tramo": [1, 1, 2, 2], "monto": [10.0, np.nan, np.nan, np.nan]})
+    salida = _imputar_por_tramo(datos)
+    assert salida["monto"].isna().tolist() == [False, False, True, True]
+    assert salida["monto"].iloc[1] == 10.0
+    assert salida["monto_imputado"].tolist() == [0, 1, 0, 0]
+
+
 @prueba("PorMedianaDeTramo", "excepcion")
 def _tramo_columna_inexistente():
     """Si la columna de tramo no existe lanza KeyError.
@@ -524,6 +571,17 @@ def _imputador_polimorfismo():
 
 
 @prueba("ImputadorFlexible", "limite")
+def _imputador_sin_nulos():
+    """Una columna sin ningún nulo no se altera.
+
+    En simple: si no hay vacíos no hay nada que rellenar. Los valores deben
+    quedar exactamente iguales (es el primer caso límite del cuaderno del curso).
+    """
+    datos = pd.DataFrame({"IMC": [25.0, 30.0, 35.0]})
+    assert ImputadorFlexible("IMC").ajustar_transformar(datos)["IMC"].tolist() == [25.0, 30.0, 35.0]
+
+
+@prueba("ImputadorFlexible", "limite")
 def _imputador_sin_fuga():
     """Aprende en entrenamiento y aplica a prueba con el valor del entrenamiento.
 
@@ -556,6 +614,248 @@ def _imputador_columna_sin_datos():
     """
     datos = pd.DataFrame({"x": [np.nan, np.nan]})
     return _debe_lanzar(ValueError, lambda: ImputadorFlexible("x").ajustar(datos), "no tiene datos")
+
+
+# ---------------------------------------------------------------------------
+# EliminadorColumna
+# ---------------------------------------------------------------------------
+
+@prueba("EliminadorColumna", "normal")
+def _quitar_columna_normal():
+    """Quita la columna indicada y deja intactas las demás y todas las filas.
+
+    En simple: IdEncuesta no forma parte del conjunto final. Debe desaparecer,
+    y la columna Edad y las 3 filas deben quedar exactamente como estaban.
+    """
+    datos = pd.DataFrame({"IdEncuesta": [1, 2, 3], "Edad": [20, 30, 40]})
+    salida = EliminadorColumna("IdEncuesta").ajustar_transformar(datos)
+    assert list(salida.columns) == ["Edad"]
+    assert salida["Edad"].tolist() == [20, 30, 40]
+
+
+@prueba("EliminadorColumna", "limite")
+def _quitar_columna_unica():
+    """Si es la única columna, queda una tabla sin columnas pero con sus filas.
+
+    En simple: al quitar la única columna que hay, la tabla se queda sin
+    columnas, pero conserva sus 2 filas. No debe fallar.
+    """
+    datos = pd.DataFrame({"IdEncuesta": [1, 2]})
+    assert EliminadorColumna("IdEncuesta").ajustar_transformar(datos).shape == (2, 0)
+
+
+@prueba("EliminadorColumna", "excepcion")
+def _quitar_columna_inexistente():
+    """Una columna que no existe lanza KeyError.
+
+    En simple: pedir eliminar una columna que no está en los datos debe fallar
+    con KeyError, en vez de seguir como si nada.
+    """
+    datos = pd.DataFrame({"Edad": [20]})
+    return _debe_lanzar(KeyError, lambda: EliminadorColumna("IdEncuesta").ajustar(datos), "no está")
+
+
+# ---------------------------------------------------------------------------
+# ConvertidorEntero
+# ---------------------------------------------------------------------------
+
+@prueba("ConvertidorEntero", "normal")
+def _convertidor_normal():
+    """Convierte una columna decimal sin nulos a entero, con los mismos valores.
+
+    En simple: HTA llega como 1.0 y 0.0 (decimales). Debe quedar como números
+    enteros (1 y 0), igual que en el archivo de la Fase 2.
+    """
+    datos = pd.DataFrame({"HTA": [1.0, 0.0, 1.0]})
+    salida = ConvertidorEntero("HTA").ajustar_transformar(datos)
+    assert pd.api.types.is_integer_dtype(salida["HTA"])
+    assert salida["HTA"].tolist() == [1, 0, 1]
+
+
+@prueba("ConvertidorEntero", "limite")
+def _convertidor_ya_entero():
+    """Una columna que ya es entera queda igual.
+
+    En simple: si GPAQ ya viene como entero, convertirla otra vez no debe
+    cambiar ni sus valores ni su tipo.
+    """
+    datos = pd.DataFrame({"GPAQ": [1, 2, 3]})
+    salida = ConvertidorEntero("GPAQ").ajustar_transformar(datos)
+    assert salida.equals(datos)
+
+
+@prueba("ConvertidorEntero", "excepcion")
+def _convertidor_con_nulos():
+    """Una columna con nulos lanza ValueError al ajustar.
+
+    En simple: un vacío no se puede escribir como número entero. Por eso el
+    paso debe negarse al ajustar, con ValueError, en vez de fallar más adelante.
+    """
+    datos = pd.DataFrame({"HTA": [1.0, np.nan, 0.0]})
+    return _debe_lanzar(ValueError, lambda: ConvertidorEntero("HTA").ajustar(datos), "tiene nulos")
+
+
+# ---------------------------------------------------------------------------
+# CodificadorOneHot
+# ---------------------------------------------------------------------------
+
+@prueba("CodificadorOneHot", "normal")
+def _onehot_normal():
+    """Crea una columna 0/1 por categoría, quita la original y conserva las demás.
+
+    En simple: Sexo (1 = Hombre, 2 = Mujer) se convierte en dos columnas,
+    Sexo_Hombre y Sexo_Mujer, con un 1 donde corresponde. La columna Sexo
+    desaparece y la columna Edad queda igual.
+    """
+    datos = pd.DataFrame({"Sexo": [1, 2, 2, 1], "Edad": [30, 40, 50, 60]})
+    paso = CodificadorOneHot("Sexo")
+    salida = paso.ajustar_transformar(datos)
+    assert list(salida.columns) == ["Edad", "Sexo_Hombre", "Sexo_Mujer"]
+    assert salida["Sexo_Hombre"].tolist() == [1, 0, 0, 1]
+    assert salida["Sexo_Mujer"].tolist() == [0, 1, 1, 0]
+    assert paso.parametros == {"categorias": {1: "Hombre", 2: "Mujer"}}
+
+
+@prueba("CodificadorOneHot", "limite")
+def _onehot_una_sola_categoria():
+    """Con una sola categoría presente se generan igual todas las columnas.
+
+    En simple: si todos son de zona urbana, igual deben aparecer Zona_Urbano y
+    Zona_Rural (esta última en 0). Las categorías salen del libro de códigos de
+    la ENS, no de los datos, así el conjunto final siempre tiene las mismas
+    columnas. (En el cuaderno del curso, en cambio, sale una sola columna.)
+    """
+    datos = pd.DataFrame({"Zona": [1, 1, 1]})
+    salida = CodificadorOneHot("Zona").ajustar_transformar(datos)
+    assert list(salida.columns) == ["Zona_Urbano", "Zona_Rural"]
+    assert salida["Zona_Urbano"].tolist() == [1, 1, 1]
+    assert salida["Zona_Rural"].tolist() == [0, 0, 0]
+
+
+@prueba("CodificadorOneHot", "limite")
+def _onehot_esquema_estable_en_prueba():
+    """Ajustado con un conjunto, a otro con menos categorías le da las mismas columnas.
+
+    En simple: se ajusta con las tres respuestas de di3 y se transforma un
+    conjunto donde todos respondieron "No". Deben salir igual las tres columnas
+    (di3_Si, di3_No, di3_No_recuerda), para que entrenamiento y prueba tengan
+    exactamente el mismo esquema.
+    """
+    entrenamiento = pd.DataFrame({"di3": [1, 2, 3]})
+    prueba_ = pd.DataFrame({"di3": [2, 2]})
+    salida = CodificadorOneHot("di3").ajustar(entrenamiento).transformar(prueba_)
+    assert list(salida.columns) == ["di3_Si", "di3_No", "di3_No_recuerda"]
+    assert salida["di3_No"].tolist() == [1, 1]
+
+
+@prueba("CodificadorOneHot", "excepcion")
+def _onehot_codigo_desconocido_al_ajustar():
+    """Un código que no está en el libro de códigos lanza ValueError al ajustar.
+
+    En simple: Sexo solo admite 1 y 2. Si aparece un 9, el paso debe fallar con
+    ValueError en vez de ignorarlo en silencio.
+    """
+    datos = pd.DataFrame({"Sexo": [1, 2, 9]})
+    return _debe_lanzar(ValueError, lambda: CodificadorOneHot("Sexo").ajustar(datos), "no reconocidos")
+
+
+@prueba("CodificadorOneHot", "excepcion")
+def _onehot_codigo_desconocido_al_transformar():
+    """Un código nuevo que aparece solo al transformar también lanza ValueError.
+
+    En simple: se ajusta con 1 y 2, y después llega un conjunto con un 9. En el
+    cuaderno del curso esa categoría nueva se ignora; aquí se decidió rechazarla
+    con ValueError, para no perder personas sin aviso.
+    """
+    paso = CodificadorOneHot("Sexo").ajustar(pd.DataFrame({"Sexo": [1, 2]}))
+    nuevos = pd.DataFrame({"Sexo": [1, 9]})
+    return _debe_lanzar(ValueError, lambda: paso.transformar(nuevos), "durante la transformación")
+
+
+@prueba("CodificadorOneHot", "excepcion")
+def _onehot_columna_sin_mapeo():
+    """Una columna sin categorías definidas lanza ValueError.
+
+    En simple: el codificador solo sabe codificar las columnas que tienen su
+    libro de códigos (Sexo, Zona, di3 y dis2). Pedirle que codifique Edad debe
+    fallar con ValueError.
+    """
+    datos = pd.DataFrame({"Edad": [30, 40]})
+    return _debe_lanzar(ValueError, lambda: CodificadorOneHot("Edad").ajustar(datos), "no existe un mapeo")
+
+
+# ---------------------------------------------------------------------------
+# EscaladorEstandar
+# ---------------------------------------------------------------------------
+
+@prueba("EscaladorEstandar", "normal")
+def _escalador_normal():
+    """Deja la columna con media 0 y desviación 1, y guarda la media y la desviación.
+
+    En simple: con [20, 30, 40, 50] la media es 35 y la desviación es la raíz
+    de 125 (desviación poblacional, ddof=0, como StandardScaler en la Fase 2).
+    Después de escalar, la columna debe tener media 0 y desviación 1.
+    """
+    datos = pd.DataFrame({"Edad": [20.0, 30.0, 40.0, 50.0]})
+    paso = EscaladorEstandar("Edad")
+    salida = paso.ajustar_transformar(datos)
+    assert np.isclose(paso.parametros["media"], 35.0)
+    assert np.isclose(paso.parametros["desviacion"], np.sqrt(125))
+    assert np.isclose(salida["Edad"].mean(), 0.0)
+    assert np.isclose(salida["Edad"].std(ddof=0), 1.0)
+
+
+@prueba("EscaladorEstandar", "limite")
+def _escalador_conserva_nulos():
+    """Los nulos se conservan y no entran en el cálculo de la media ni la desviación.
+
+    En simple: as27 tiene vacíos que se dejaron a propósito. El escalador debe
+    dejarlos vacíos y escalar solo los valores presentes (media 0 y desviación
+    1 entre ellos).
+    """
+    datos = pd.DataFrame({"as27": [20.0, 30.0, np.nan, 40.0, 50.0]})
+    salida = EscaladorEstandar("as27").ajustar_transformar(datos)
+    assert salida["as27"].isna().tolist() == [False, False, True, False, False]
+    presentes = salida["as27"].dropna()
+    assert np.isclose(presentes.mean(), 0.0) and np.isclose(presentes.std(ddof=0), 1.0)
+
+
+@prueba("EscaladorEstandar", "limite")
+def _escalador_sin_fuga():
+    """Aprende en entrenamiento y aplica a prueba la media y desviación del entrenamiento.
+
+    En simple: con [0, 10] aprende media 5 y desviación 5. Al escalar otro
+    conjunto [5, 15] debe usar esos mismos valores y dar [0, 2]. Si diera
+    media 0 en la prueba, estaría "espiando" datos que no debía conocer.
+    """
+    entrenamiento = pd.DataFrame({"IMC": [0.0, 10.0]})
+    prueba_ = pd.DataFrame({"IMC": [5.0, 15.0]})
+    salida = EscaladorEstandar("IMC").ajustar(entrenamiento).transformar(prueba_)
+    assert np.allclose(salida["IMC"].tolist(), [0.0, 2.0])
+
+
+@prueba("EscaladorEstandar", "excepcion")
+def _escalador_varianza_cero():
+    """Una columna constante (desviación cero) lanza ValueError.
+
+    En simple: si todos tienen el mismo valor, la desviación es 0 y escalar
+    obligaría a dividir por cero. En el cuaderno del curso eso devuelve ceros;
+    aquí se decidió avisar con ValueError, porque una columna constante no
+    aporta información y conviene revisarla.
+    """
+    datos = pd.DataFrame({"Edad": [50.0, 50.0, 50.0]})
+    return _debe_lanzar(ValueError, lambda: EscaladorEstandar("Edad").ajustar(datos), "desviación estándar")
+
+
+@prueba("EscaladorEstandar", "excepcion")
+def _escalador_sin_datos():
+    """Una columna sin ningún dato lanza ValueError.
+
+    En simple: si la columna está completamente vacía no hay media ni
+    desviación que calcular. Debe fallar con ValueError.
+    """
+    datos = pd.DataFrame({"Edad": [np.nan, np.nan]})
+    return _debe_lanzar(ValueError, lambda: EscaladorEstandar("Edad").ajustar(datos), "desviación estándar")
 
 
 # ---------------------------------------------------------------------------
@@ -621,6 +921,20 @@ def _pipeline_paso_nuevo_exige_reajustar():
     return _debe_lanzar(RuntimeError, lambda: pipe.transformar(datos), "Pipeline:")
 
 
+@prueba("Pipeline", "limite")
+def _pipeline_no_modifica_entrada():
+    """Ajustar y transformar dejan intacto el DataFrame de entrada.
+
+    En simple: después de pasar los datos por los tres pasos, la tabla original
+    debe seguir exactamente igual (con su -9999 y sus vacíos). Si cambiara, un
+    segundo uso de esos datos daría otro resultado.
+    """
+    datos = _datos_pipeline()
+    original = datos.copy()
+    Pipeline(_pasos_pipeline()).ajustar(datos).transformar(datos)
+    assert datos.equals(original)
+
+
 @prueba("Pipeline", "excepcion")
 def _pipeline_agregar_no_transformador():
     """Agregar algo que no es un Transformador lanza TypeError.
@@ -640,6 +954,18 @@ def _pipeline_sin_ajustar():
     """
     datos = _datos_pipeline()
     return _debe_lanzar(RuntimeError, lambda: Pipeline(_pasos_pipeline()).transformar(datos), "Pipeline:")
+
+
+@prueba("Pipeline", "excepcion")
+def _pipeline_paso_columna_inexistente():
+    """Un paso que apunta a una columna inexistente detiene el ajuste con KeyError.
+
+    En simple: si uno de los pasos pide una columna que no existe, el pipeline
+    debe detenerse al ajustar y el mensaje debe nombrar al paso que falló.
+    """
+    datos = _datos_pipeline()
+    pipe = Pipeline([EliminadorFilasNulas("HTA"), ImputadorFlexible("no_existe")])
+    return _debe_lanzar(KeyError, lambda: pipe.ajustar(datos), "ImputadorFlexible(no_existe)")
 
 
 # ---------------------------------------------------------------------------
@@ -774,7 +1100,7 @@ def informe_diferencias(obtenido, referencia, rtol=1e-5, atol=1e-8):
     return pd.DataFrame(filas)
 
 
-def verificar_equivalencia(obtenido, referencia, columnas=None, verificar_tipos=False,
+def verificar_equivalencia(obtenido, referencia, columnas=None, verificar_tipos=True,
                            ignorar_orden_columnas=False, rtol=1e-5, atol=1e-8):
     """Comprueba con pd.testing.assert_frame_equal que dos conjuntos son iguales.
 
@@ -783,7 +1109,9 @@ def verificar_equivalencia(obtenido, referencia, columnas=None, verificar_tipos=
     - obtenido: lo que produce el pipeline con clases.
     - referencia: lo que se espera (el CSV de la Fase 2).
     - columnas: compara solo ese subconjunto (útil mientras el pipeline está incompleto).
-    - verificar_tipos: exige el mismo tipo de dato; por defecto solo se comparan los valores.
+    - verificar_tipos: exige además el mismo tipo de dato (por ejemplo, HTA entera y
+      no decimal). Activado por defecto, como assert_frame_equal; con False solo
+      se comparan los valores.
     - ignorar_orden_columnas: si es True, no importa el orden de las columnas.
     - rtol / atol: tolerancia para diferencias mínimas de decimales.
 
