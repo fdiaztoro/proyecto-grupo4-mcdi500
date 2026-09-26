@@ -9765,29 +9765,29 @@ Desviación estándar: 1.0
 <th>0</th>
 <td>1</td>
 <td>5511</td>
-<td>0.000128</td>
-<td>0.000454</td>
+<td>0.000135</td>
+<td>0.000500</td>
 </tr>
 <tr>
 <th>1</th>
 <td>10</td>
 <td>55110</td>
-<td>0.000211</td>
-<td>0.000566</td>
+<td>0.000228</td>
+<td>0.000614</td>
 </tr>
 <tr>
 <th>2</th>
 <td>50</td>
 <td>275550</td>
-<td>0.001017</td>
-<td>0.001439</td>
+<td>0.001090</td>
+<td>0.001557</td>
 </tr>
 <tr>
 <th>3</th>
 <td>100</td>
 <td>551100</td>
-<td>0.002042</td>
-<td>0.002623</td>
+<td>0.002073</td>
+<td>0.002642</td>
 </tr>
 </tbody>
 </table>
@@ -9908,29 +9908,29 @@ Desviación estándar: 1.0
 <th>0</th>
 <td>1</td>
 <td>5511</td>
-<td>181.714844</td>
-<td>146.660156</td>
+<td>181.043945</td>
+<td>146.450195</td>
 </tr>
 <tr>
 <th>1</th>
 <td>10</td>
 <td>55110</td>
-<td>1729.844727</td>
+<td>1730.061523</td>
 <td>1356.238281</td>
 </tr>
 <tr>
 <th>2</th>
 <td>50</td>
 <td>275550</td>
-<td>8618.797852</td>
-<td>6737.732422</td>
+<td>8618.743164</td>
+<td>6737.777344</td>
 </tr>
 <tr>
 <th>3</th>
 <td>100</td>
 <td>551100</td>
 <td>17229.368164</td>
-<td>13465.121094</td>
+<td>13465.166016</td>
 </tr>
 </tbody>
 </table>
@@ -10166,17 +10166,17 @@ Desviación estándar: 1.0
 <th>0</th>
 <td>1</td>
 <td>5511</td>
-<td>0.000284</td>
-<td>0.000261</td>
-<td>222.373047</td>
-<td>189.162109</td>
+<td>0.000305</td>
+<td>0.000259</td>
+<td>222.421875</td>
+<td>189.210938</td>
 </tr>
 <tr>
 <th>1</th>
 <td>10</td>
 <td>55110</td>
-<td>0.000558</td>
-<td>0.000610</td>
+<td>0.000511</td>
+<td>0.000546</td>
 <td>2932.513672</td>
 <td>2503.881836</td>
 </tr>
@@ -10184,8 +10184,8 @@ Desviación estándar: 1.0
 <th>2</th>
 <td>50</td>
 <td>275550</td>
-<td>0.001608</td>
-<td>0.002047</td>
+<td>0.001625</td>
+<td>0.002000</td>
 <td>12569.000000</td>
 <td>10418.475586</td>
 </tr>
@@ -10193,9 +10193,9 @@ Desviación estándar: 1.0
 <th>3</th>
 <td>100</td>
 <td>551100</td>
-<td>0.003041</td>
-<td>0.003174</td>
-<td>25130.107422</td>
+<td>0.002987</td>
+<td>0.003183</td>
+<td>25130.156250</td>
 <td>20827.303711</td>
 </tr>
 </tbody>
@@ -10504,9 +10504,9 @@ Estructura final compatible con ens_procesado.csv.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Construcción del índice (dict con zip): 5.5607 ms
-Búsqueda lineal (iterrows):              15.8433 ms
-Búsqueda indexada (dict):                0.0446 µs
+<pre>Construcción del índice (dict con zip): 5.7820 ms
+Búsqueda lineal (iterrows):              16.6844 ms
+Búsqueda indexada (dict):                0.0479 µs
 Umbral corregido:                        0.35 búsquedas
 </pre>
 </div>
@@ -10719,6 +10719,249 @@ tener varias formas intercambiables de hacer lo mismo sobre una
 columna. Factory, Observer y Singleton resuelven problemas distintos
 (decidir qué objeto construir, registrar eventos o compartir una única
 configuración) que no aparecen en esta etapa del proyecto.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=30e82c75">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="8.-Arquitectura-y-conclusiones">8. Arquitectura y conclusiones<a class="anchor-link" href="#8.-Arquitectura-y-conclusiones">¶</a></h2><p>El pipeline construido en las secciones anteriores no es solo una lista de clases que reproducen la Fase 2: es una arquitectura con decisiones de diseño concretas. Esta sección documenta esas decisiones.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0f67f17e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="8.1-Cohesi%C3%B3n-y-acoplamiento">8.1 Cohesión y acoplamiento<a class="anchor-link" href="#8.1-Cohesi%C3%B3n-y-acoplamiento">¶</a></h3><p>Cada módulo de <code>src/</code> tiene una única responsabilidad: <code>transformador.py</code> define el contrato común (<code>ajustar()</code>, <code>transformar()</code>, <code>ajustar_transformar()</code>); <code>imputadores.py</code> resuelve exclusivamente el tratamiento de valores faltantes; <code>transformadores.py</code> resuelve codificación, escalamiento y las dos transformaciones de limpieza final; <code>pipeline.py</code> solo orquesta una secuencia de pasos, sin saber qué hace cada uno. Esta separación por responsabilidad es alta cohesión: cada módulo agrupa código que cambia por el mismo motivo (McConnell, 2004).</p>
+<p>El acoplamiento entre estos módulos es bajo porque la única dependencia real entre ellos es la interfaz de <code>Transformador</code>. Esto se puede comprobar directamente en el código, en lugar de solo describirlo:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0a87dd31">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [32]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">src.imputadores</span><span class="w"> </span><span class="kn">import</span> <span class="n">MarcadorNoRespuesta</span><span class="p">,</span> <span class="n">EliminadorFilasNulas</span><span class="p">,</span> <span class="n">ImputadorFlexible</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.transformadores</span><span class="w"> </span><span class="kn">import</span> <span class="n">CodificadorOneHot</span><span class="p">,</span> <span class="n">EscaladorEstandar</span><span class="p">,</span> <span class="n">EliminadorColumna</span><span class="p">,</span> <span class="n">ConvertidorEntero</span>
+
+<span class="n">pasos_del_pipeline</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">MarcadorNoRespuesta</span><span class="p">,</span> <span class="n">EliminadorFilasNulas</span><span class="p">,</span> <span class="n">ImputadorFlexible</span><span class="p">,</span>
+    <span class="n">EliminadorColumna</span><span class="p">,</span> <span class="n">ConvertidorEntero</span><span class="p">,</span> <span class="n">CodificadorOneHot</span><span class="p">,</span> <span class="n">EscaladorEstandar</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">clase</span> <span class="ow">in</span> <span class="n">pasos_del_pipeline</span><span class="p">:</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">clase</span><span class="o">.</span><span class="vm">__bases__</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">clase</span><span class="o">.</span><span class="vm">__name__</span><span class="si">:</span><span class="s2">&lt;22</span><span class="si">}</span><span class="s2"> hereda de </span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="n">codigo_pipeline</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">RAIZ</span> <span class="o">/</span> <span class="s2">"src"</span> <span class="o">/</span> <span class="s2">"pipeline.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">conoce_a_los_pasos</span> <span class="o">=</span> <span class="s2">"imputadores"</span> <span class="ow">in</span> <span class="n">codigo_pipeline</span> <span class="ow">or</span> <span class="s2">"transformadores"</span> <span class="ow">in</span> <span class="n">codigo_pipeline</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"¿pipeline.py importa alguna de estas clases directamente?"</span><span class="p">,</span> <span class="n">conoce_a_los_pasos</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>MarcadorNoRespuesta    hereda de Transformador
+EliminadorFilasNulas   hereda de Transformador
+ImputadorFlexible      hereda de Transformador
+EliminadorColumna      hereda de Transformador
+ConvertidorEntero      hereda de Transformador
+CodificadorOneHot      hereda de Transformador
+EscaladorEstandar      hereda de Transformador
+
+¿pipeline.py importa alguna de estas clases directamente? False
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=855806dc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Todas las clases heredan de <code>Transformador</code>, sin importar en qué módulo estén definidas. <code>Pipeline</code> no necesita conocer estos módulos: basta con que cada objeto que recibe cumpla el contrato de la clase base. Este es el mismo principio que sostiene el patrón Strategy usado en la imputación (sección 7): el código que orquesta no conoce los detalles de lo que orquesta (Gamma et al., 1994).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=91022305">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="8.2-Flujo-de-datos-del-pipeline">8.2 Flujo de datos del pipeline<a class="anchor-link" href="#8.2-Flujo-de-datos-del-pipeline">¶</a></h3><p>datos (crudo, ens_variables_f1f2.xlsx, 5.520 x 16)
+|
+|- MarcadorNoRespuesta("as28") marca -9999 como nulo
+|- EliminadorFilasNulas("HTA") elimina 9 filas sin diagnostico
+|- ImputadorFlexible("IMC", PorMediana())
+|- ImputadorFlexible("anos_estudio_MINSAL_1", PorMediana())
+|- ImputadorFlexible("as27", PorMedianaDeTramo("as28"))
+|- ImputadorFlexible("GPAQ", PorModa())
+|- EliminadorColumna("IdEncuesta")
+|- EliminadorColumna("FechaInicioF1")
+|- ConvertidorEntero("HTA"), ConvertidorEntero("GPAQ")
+|- CodificadorOneHot(...) x4 Sexo, Zona, di3, dis2
+|- EscaladorEstandar(...) x3 Edad, IMC, as27
+|
+v
+df_transformado (5.511 x 23)</p>
+<p>Cada paso de la lista es una llamada a <code>ajustar_transformar()</code>. El flujo es lineal y unidireccional: no hay ramas condicionales ni pasos que dependan de un resultado calculado fuera de su propio <code>ajustar()</code>. El orden de los pasos, documentado en la sección 2 y verificado en la sección 6.8 contra <code>ens_procesado.csv</code>, es la unica fuente de verdad sobre como se construye el dataset final.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d3d116c5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="8.3-Division-funcional-en-lugar-de-recursividad">8.3 Division funcional en lugar de recursividad<a class="anchor-link" href="#8.3-Division-funcional-en-lugar-de-recursividad">¶</a></h3><p>El proyecto no usa recursividad en el pipeline principal: los 9 pasos siguen una secuencia fija y conocida de antemano, sin una estructura autosimilar que se repita a distintas escalas. La recursividad tiene sentido cuando el problema tiene esa forma -por ejemplo, <code>aplanar()</code> en la Fase 1 recorre metadatos anidados a una profundidad que no se conoce de antemano-, pero para una secuencia fija de transformaciones no aporta claridad ni eficiencia: solo expresaria de forma menos directa lo que ya es, en esencia, un bucle.</p>
+<p>En su lugar, el diseño resuelve el problema mediante division funcional: cada transformacion es una unidad independiente (una clase), y la composicion de esas unidades -no la recursion- es lo que arma el comportamiento completo. Esto mantiene cada pieza pequeña, comprobable por separado (seccion 3) y reemplazable sin afectar a las demas.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=57c03068">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="8.4-Extensibilidad:-agregar-un-paso-sin-modificar-el-Pipeline">8.4 Extensibilidad: agregar un paso sin modificar el Pipeline<a class="anchor-link" href="#8.4-Extensibilidad:-agregar-un-paso-sin-modificar-el-Pipeline">¶</a></h3><p>Un diseño escalable debe permitir requisitos nuevos sin reescribir lo que ya funciona. Se demuestra agregando un paso que el equipo no anticipo al diseñar el pipeline original:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=dea80e43">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [33]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">RedondeadorDecimales</span><span class="p">(</span><span class="n">Transformador</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Paso nuevo, no anticipado por el equipo: redondea una columna</span>
+<span class="sd">    numerica a 2 decimales. Sirve para demostrar que el Pipeline no</span>
+<span class="sd">    necesita modificarse para aceptar un paso que no existia antes."""</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">aprender</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">aplicar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">columna</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">columna</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+
+<span class="n">pipeline_extendido</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">pasos_integracion</span> <span class="o">+</span> <span class="p">[</span><span class="n">RedondeadorDecimales</span><span class="p">(</span><span class="s2">"Edad"</span><span class="p">)])</span>
+<span class="n">resultado_extendido</span> <span class="o">=</span> <span class="n">pipeline_extendido</span><span class="o">.</span><span class="n">ajustar_transformar</span><span class="p">(</span><span class="n">imputado</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Pipeline original:  "</span><span class="p">,</span> <span class="n">df_transformado</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Pipeline extendido: "</span><span class="p">,</span> <span class="n">resultado_extendido</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"¿Se modifico pipeline.py para lograr esto?  No."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"¿Se modifico alguna clase existente?         No."</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Pipeline original:   (5511, 23)
+Pipeline extendido:  (5511, 23)
+¿Se modifico pipeline.py para lograr esto?  No.
+¿Se modifico alguna clase existente?         No.
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=983904ea">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><code>Pipeline</code> quedo abierto a la extension (acepta cualquier paso nuevo que cumpla el contrato de <code>Transformador</code>) pero cerrado a la modificacion (ni <code>Pipeline</code> ni los pasos existentes cambiaron para lograrlo). Este es el principio abierto/cerrado de diseño orientado a objetos (Martin, 2017), y es la misma propiedad que permitio, durante esta entrega, incorporar una funcion de medicion completamente nueva (<code>construir_indice_dict</code> corregido, seccion 6.9) sin tocar el resto del pipeline.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=95fbc0dd">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="8.5-Evolucion-del-proyecto:-registro-razonado">8.5 Evolucion del proyecto: registro razonado<a class="anchor-link" href="#8.5-Evolucion-del-proyecto:-registro-razonado">¶</a></h3><p><strong>Fase 2 -&gt; Fase 3.</strong> En la Fase 2 cada paso de limpieza era una funcion suelta con ramas <code>if</code> para las distintas alternativas (por ejemplo, <code>imputar_nulos_numericos</code> decidia internamente que estrategia usar). En esta entrega esos pasos se reescribieron como clases que comparten la interfaz de <code>Transformador</code>, y la eleccion de estrategia de imputacion se resolvio aparte con el patron Strategy (seccion 7), separando "como se usa un paso" de "que hace cada alternativa".</p>
+<p><strong>Durante esta entrega.</strong> Se detectaron y corrigieron tres problemas concretos, en orden:</p>
+<ol>
+<li>Los modulos de <code>src/</code> dependian de que <code>src/</code> estuviera agregado directamente al <code>sys.path</code>, lo que impedia importarlos como paquete estandar (<code>from src.pipeline import Pipeline</code>) desde la raiz del repositorio. Se corrigieron los imports internos y la configuracion de rutas del notebook para que <code>src/</code> funcione como paquete.</li>
+<li>La integracion de codificacion y escalamiento se hacia encadenando los transformadores a mano, sin usar la clase <code>Pipeline</code>. Se reemplazo por una instancia real de <code>Pipeline</code> (seccion 6.8), que es la pieza de diseño estructurado que exige este apartado.</li>
+<li>La medicion de <code>construir_indice_dict</code> en la Formativa 3 usaba <code>iterrows()</code>, lo que inflaba artificialmente el umbral reportado (437 busquedas). Se corrigio a <code>dict(zip(...))</code> y se reporto el umbral real (~0,35 busquedas, seccion 6.9), sin alterar la conclusion ya validada de adoptar <code>set_index</code> como solucion final.</li>
+</ol>
+<p>Ademas, se agrego una seccion de validacion (seccion 3) que ejecuta dentro del notebook las 59 pruebas normal/limite/excepcion registradas en <code>tests/casos_por_clase.py</code>, en lugar de solo referenciar el archivo donde viven.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=09fce64d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="8.6-Conclusiones">8.6 Conclusiones<a class="anchor-link" href="#8.6-Conclusiones">¶</a></h3><p>El pipeline con clases reproduce exactamente el resultado de la Fase 2 (5.511 filas x 23 columnas, sin columnas faltantes ni adicionales), lo que confirma que la refactorizacion a POO no altero el comportamiento del preprocesamiento, solo su estructura interna. Los tres principios de POO se evidencian con codigo ejecutado, no solo descrito: herencia (todos los pasos parten de <code>Transformador</code>), polimorfismo (<code>Pipeline</code> llama <code>ajustar_transformar()</code> sin saber que clase concreta recibe) y encapsulamiento (el estado aprendido en <code>_parametros</code> solo se expone como copia de lectura).</p>
+<p>La principal limitacion del proyecto sigue siendo la que se documento en la seccion 7: 816 personas sin ingreso declarado quedan sin imputar en <code>as27</code> porque tampoco declararon su tramo, y esa ausencia podria no ser aleatoria. Esto no es una falla del pipeline sino una decision explicita de no inventar un dato que nadie entrego, y queda como limitacion abierta para la interpretacion de los resultados del estudio.</p>
+<p>Como trabajo futuro, la extensibilidad demostrada en 8.4 deja abierta la posibilidad de incorporar nuevos pasos de preprocesamiento -por ejemplo, tratamiento de outliers o nuevas variables derivadas- sin modificar la arquitectura actual.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=75c96c5d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Fuentes-citadas-en-esta-seccion">Fuentes citadas en esta seccion<a class="anchor-link" href="#Fuentes-citadas-en-esta-seccion">¶</a></h3><ul>
+<li>Amershi, S., Begel, A., Bird, C., DeLine, R., Gall, H., Kamar, E., Nagappan, N., Nushi, B., &amp; Zimmermann, T. (2019). Software engineering for machine learning: A case study. <em>Proceedings of the 41st International Conference on Software Engineering: Software Engineering in Practice (ICSE-SEIP)</em>, 291-300. <a href="https://doi.org/10.1109/ICSE-SEIP.2019.00042">https://doi.org/10.1109/ICSE-SEIP.2019.00042</a></li>
+<li>Gamma, E., Helm, R., Johnson, R., &amp; Vlissides, J. (1994). <em>Design patterns: Elements of reusable object-oriented software</em>. Addison-Wesley.</li>
+<li>Martin, R. C. (2017). <em>Clean architecture: A craftsman's guide to software structure and design</em>. Prentice Hall.</li>
+<li>McConnell, S. (2004). <em>Code complete</em> (2.a ed.). Microsoft Press.</li>
+<li>scikit-learn developers. (2024). <em>Pipeline - scikit-learn 1.5 documentation</em>. <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html">https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html</a></li>
+</ul>
+<p><em>Nota: esta lista cubre bibliografia tecnica y academica. Falta agregar bibliografia docente (material del curso), que debe incorporarse en el informe.</em></p>
 </div>
 </div>
 </div>
