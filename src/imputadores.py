@@ -6,7 +6,7 @@ estrategia que recibe, así que cambiar la forma de imputar no toca el pipeline.
 
 import pandas as pd
 
-from transformador import Transformador
+from src.transformador import Transformador
 
 
 class MarcadorNoRespuesta(Transformador):

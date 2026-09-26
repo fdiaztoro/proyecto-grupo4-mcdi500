@@ -35,13 +35,13 @@ Fase 2 no están aquí: viven en src/validador.py.
 import numpy as np
 import pandas as pd
 
-from imputadores import (
+from src.imputadores import (
     EliminadorFilasNulas, ImputadorFlexible, MarcadorNoRespuesta,
     PorMedia, PorMediana, PorMedianaDeTramo, PorModa,
 )
-from pipeline import Pipeline
-from transformador import Transformador
-from transformadores import (
+from src.pipeline import Pipeline
+from src.transformador import Transformador
+from src.transformadores import (
     CodificadorOneHot, ConvertidorEntero, EliminadorColumna, EscaladorEstandar,
 )
 
