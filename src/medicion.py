@@ -6,6 +6,7 @@ refactorizado a clases.
 
 import time
 import tracemalloc
+import timeit
 
 
 def buscar_recorriendo(df, posicion_buscada):
@@ -65,8 +66,16 @@ def construir_indice_pandas(df, clave):
 
 
 def construir_indice_dict(df, clave):
-    """Costo de construccion usando un diccionario nativo de Python."""
-    return {fila[clave]: fila for _, fila in df.iterrows()}
+    """Costo de construccion usando un diccionario nativo de Python.
+
+    Se evita iterrows(): cada iteracion de iterrows crea una Serie por
+    fila, lo que encarece la construccion sin necesidad. dict(zip(...))
+    empareja las claves con los registros ya extraidos por to_dict(),
+    evitando ese costo por fila.
+    """
+    claves = df[clave]
+    filas = df.to_dict("records")
+    return dict(zip(claves, filas))
 
 
 def buscar_indexado_pandas(df_indexado, valor):
@@ -80,3 +89,19 @@ def buscar_indexado_pandas(df_indexado, valor):
 def buscar_indexado_dict(indice_dict, valor):
     """Busqueda O(1) sobre un diccionario ya construido."""
     return indice_dict.get(valor)
+
+def medir_tiempo_timeit(funcion, *args, numero=20, repeticiones=5):
+    """
+    Mide el tiempo promedio por llamada utilizando timeit.
+
+    Ejecuta varios bloques de mediciones y devuelve el mejor tiempo
+    promedio por ejecución, reduciendo el efecto de variaciones
+    externas del sistema.
+    """
+    tiempos = timeit.repeat(
+        lambda: funcion(*args),
+        number=numero,
+        repeat=repeticiones
+    )
+
+    return min(tiempos) / numero
