@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>S3_F4_Consolidado_ejecutado</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>S3_F4_Consolidado</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7848,7 +7848,7 @@ Docente: Omar Salinas</p>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>REGISTRO DEL ENTORNO
 ==========================================================
-  Python      : 3.13.9
+  Python      : 3.13.7
   NumPy       : 2.5.3
   pandas      : 3.0.5
   Matplotlib  : 3.11.1
@@ -8269,12 +8269,12 @@ Dimensiones finales   : (5511, 23)
 <tr>
 <th>0</th>
 <td>EscaladorEstandar (propio)</td>
-<td>0.000145</td>
+<td>0.000220</td>
 </tr>
 <tr>
 <th>1</th>
 <td>StandardScaler (sklearn)</td>
-<td>0.000494</td>
+<td>0.000663</td>
 </tr>
 </tbody>
 </table>
@@ -9489,7 +9489,7 @@ pull request del repositorio), de modo que cualquier mejora puede rastrearse en 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="9.1-Registro-de-mejoras-por-fase">9.1 Registro de mejoras por fase<a class="anchor-link" href="#9.1-Registro-de-mejoras-por-fase">¶</a></h2><p>Esta celda construye la tabla <code>mejoras</code>, que reúne las once mejoras principales del
+<h2 id="9.1-Registro-de-mejoras-por-fase">9.1 Registro de mejoras por fase<a class="anchor-link" href="#9.1-Registro-de-mejoras-por-fase">¶</a></h2><p>Esta celda construye la tabla <code>mejoras</code>, que reúne las doce mejoras principales del
 proyecto, de la Fase 1 a la Fase 4. Cada fila indica la fase, el problema observado (propio
 o señalado en la retroalimentación docente), la acción tomada, su impacto y la evidencia que
 lo respalda (sección, commit o pull request), de modo que cada cambio pueda justificarse y
@@ -9564,6 +9564,11 @@ aparezcan completos.</p>
      <span class="s2">"accion"</span><span class="p">:</span> <span class="s2">"Se seleccionaron tres figuras con hilo contexto, contraste y resolución"</span><span class="p">,</span>
      <span class="s2">"impacto"</span><span class="p">:</span> <span class="s2">"El informe argumenta en lugar de solo describir"</span><span class="p">,</span>
      <span class="s2">"evidencia"</span><span class="p">:</span> <span class="s2">"commits 30c8b23 y 4546205 (PR #30 y #33)"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"fase"</span><span class="p">:</span> <span class="s2">"F4"</span><span class="p">,</span>
+     <span class="s2">"observacion"</span><span class="p">:</span> <span class="s2">"GPAQ se reclasifico como ordinal en F2 (Bajo/Moderado/Alto), pero quedo como supuesto sin verificar contra el libro de codigos"</span><span class="p">,</span>
+     <span class="s2">"accion"</span><span class="p">:</span> <span class="s2">"Se revisa contra el libro de codigos oficial de la ENS 2016-2017 y se confirma que la codificacion es correcta"</span><span class="p">,</span>
+     <span class="s2">"impacto"</span><span class="p">:</span> <span class="s2">"El supuesto usado en actividad_txt (Figura 2, Objetivo 4) queda respaldado, no solo asumido"</span><span class="p">,</span>
+     <span class="s2">"evidencia"</span><span class="p">:</span> <span class="s2">"commit 399aca1"</span><span class="p">},</span>
 <span class="p">])</span>
 
 <span class="n">mejoras</span>
@@ -9692,6 +9697,14 @@ aparezcan completos.</p>
 <td>Se seleccionaron tres figuras con hilo contexto, contraste y resolución</td>
 <td>El informe argumenta en lugar de solo describir</td>
 <td>commits 30c8b23 y 4546205 (PR #30 y #33)</td>
+</tr>
+<tr>
+<th>11</th>
+<td>F4</td>
+<td>GPAQ se reclasifico como ordinal en F2 (Bajo/Moderado/Alto), pero quedo como supuesto sin verificar contra el libro de codigos</td>
+<td>Se revisa contra el libro de codigos oficial de la ENS 2016-2017 y se confirma que la codificacion es correcta</td>
+<td>El supuesto usado en actividad_txt (Figura 2, Objetivo 4) queda respaldado, no solo asumido</td>
+<td>commit 399aca1</td>
 </tr>
 </tbody>
 </table>
