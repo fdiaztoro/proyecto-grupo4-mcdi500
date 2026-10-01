@@ -11,12 +11,61 @@ cardiovascular, utilizando la Encuesta Nacional de Salud (ENS)
 - Guillermo Subiabre Chacón
 - Ninoska Yévenes Hernández
 
+Docente: Omar Salinas
+
+## Contexto y problema
+
+Las enfermedades cardiovasculares son la principal causa de muerte en Chile
+y en el mundo. Según la Encuesta Nacional de Salud (ENS) 2016-2017 del
+Ministerio de Salud, la prevalencia nacional de hipertensión arterial
+alcanza 27,6% y la de sospecha de diabetes mellitus 12,3% en personas de 15
+años y más (MINSAL, 2017). Estas cifras agregadas no informan cómo se
+distribuye el riesgo al interior de la población.
+
+Se dispone de registros individuales de la ENS 2016-2017, pero no de una
+caracterización de cómo el perfil sociodemográfico de las personas
+encuestadas se asocia con los principales indicadores de riesgo
+cardiovascular disponibles en la encuesta.
+
 ## Pregunta de investigación
 
-¿Cómo se relacionan las condiciones sociodemográficas (edad, sexo,
-nivel educacional, ingreso del hogar y zona de residencia) con la
-presencia de indicadores de riesgo cardiovascular en participantes
-de la ENS 2016-2017?
+¿Cómo se relacionan las condiciones sociodemográficas (edad, sexo, nivel
+educacional, ingreso del hogar y zona de residencia) con la presencia de
+hipertensión arterial, diabetes, colesterol alto, índice de masa corporal
+y nivel de actividad física en los participantes de la ENS 2016-2017?
+
+### Objetivo general
+
+Caracterizar la relación entre las condiciones sociodemográficas de los
+participantes (edad, sexo, nivel educacional, ingreso del hogar y zona de
+residencia) y la presencia de hipertensión arterial, diabetes, colesterol
+alto, un índice de masa corporal elevado y un nivel insuficiente de
+actividad física en la ENS 2016-2017.
+
+### Objetivos específicos
+
+1. Comparar la prevalencia de hipertensión arterial entre los distintos
+   grupos etarios.
+2. Describir cómo varía la prevalencia de diabetes según el grupo etario y
+   la zona de residencia.
+3. Analizar la relación entre el nivel educacional y la presencia de
+   colesterol alto.
+4. Examinar la asociación entre el índice de masa corporal y el nivel de
+   actividad física.
+5. Evaluar si la relación entre edad e índice de masa corporal, en
+   presencia de hipertensión, se mantiene al estratificar por sexo.
+
+### Alcance y limitaciones
+
+El análisis es descriptivo y exploratorio: no incluye modelamiento
+predictivo ni pruebas de hipótesis formales, y las asociaciones que se
+presentan son descriptivas, no causales. La ENS tiene diseño muestral
+complejo (conglomerados y estratos); las cifras que se citan en el texto
+se ponderan por el factor de expansión `Fexp_F1F2p_Corr` para ser
+comparables con MINSAL, pero no se estima varianza ni intervalos de
+confianza por diseño muestral (fuera del alcance del curso). El detalle
+completo de alcance, restricciones y supuestos está documentado en la
+Parte I (1.5) de `F4/notebooks/S3_F4_Consolidado.ipynb`.
 
 ## Datos
 
@@ -29,7 +78,7 @@ de la ENS 2016-2017?
   ENS 2016-2017 desde la sección Bases de datos del Departamento de
   Epidemiología del MINSAL (<https://epi.minsal.cl/bases-de-datos/>). Si
   la descarga no viene en Excel, conviértala a `.xlsx` (hoja `Sheet1`)
-  y guárdela como `data/raw/ens2016.xlsx`. Los notebooks de F3 no lo
+  y guárdela como `data/raw/ens2016.xlsx`. Los notebooks de F3 y F4 no lo
   necesitan: parten de los archivos de `data/processed/`, que sí están
   en el repositorio.
 - **Subconjunto seleccionado:** `data/processed/ens_variables_seleccionadas.xlsx`
@@ -37,10 +86,13 @@ de la ENS 2016-2017?
 - **Subconjunto elegible F1-F2:** `data/processed/ens_variables_f1f2.xlsx`
   (5.520 filas, filtrado por el ponderador `Fexp_F1F2p_Corr`).
 - **Subconjunto procesado final (vigente):** `data/processed/ens_procesado.csv`
-  (5.511 filas, 23 columnas, limpio y listo para la Fase 3). El papel de
+  (5.511 filas, 23 columnas, limpio y listo para el análisis). El papel de
   cada archivo de `data/processed/` se detalla en
   `data/processed/README.md`.
-- **Ponderador utilizado:** `Fexp_F1F2p_Corr` (componente combinado F1-F2).
+- **Ponderador utilizado:** `Fexp_F1F2p_Corr` (componente combinado F1-F2),
+  aplicado a las cifras del texto (tasas y promedios); las distribuciones
+  de los gráficos de caja y dispersión se muestran sin ponderar (ver
+  Alcance y limitaciones).
 
 ## Estructura del repositorio
 
@@ -58,6 +110,10 @@ proyecto-grupo4-mcdi500/
 │ └── notebooks/
 │   ├── f3_formativa_complejidad.ipynb Formativa 3: complejidad algorítmica
 │   └── S2_F3_NucleoAlgoritmico_Eficiencia_POO.ipynb Sumativa 2: preprocesamiento en clases (POO)
+├── F4/
+│ ├── notebooks/S3_F4_Consolidado.ipynb Sumativa 3: resultados, discusión y conclusiones
+│ ├── figuras/ Las tres figuras oficiales exportadas en PNG
+│ └── changelog.md Registro cronológico de mejoras, de F1 a F4
 ├── src/
 │ ├── carga.py Carga y preparación del conjunto de la Fase 3
 │ ├── medicion.py Funciones de búsqueda y medición de tiempo y memoria
@@ -67,7 +123,7 @@ proyecto-grupo4-mcdi500/
 │ ├── pipeline.py Encadena los pasos del preprocesamiento en orden
 │ └── validador.py Valida el resultado y lo compara con la Fase 2
 ├── docs/
-│ └── evidencias/ Notebooks de F1, F2 y F3 ejecutados en HTML/PDF (con salidas)
+│ └── evidencias/ Notebooks de F1 a F4 ejecutados en HTML/PDF (con salidas)
 ├── tests/
 │ ├── casos_por_clase.py Pruebas por clase: normal, límite y excepción
 │ ├── test_casos_por_clase.py Ejecuta esas pruebas con pytest
@@ -76,7 +132,6 @@ proyecto-grupo4-mcdi500/
 ├── requirements.txt
 └── README.MD
 ```
-
 
 ## Requisitos y ejecución
 
@@ -126,20 +181,22 @@ el kernel **Python (grupo4-mcdi500)**:
 2. `F2/notebooks/S1_F2_Preprocesamiento.ipynb`
 3. `F3/notebooks/f3_formativa_complejidad.ipynb`
 4. `F3/notebooks/S2_F3_NucleoAlgoritmico_Eficiencia_POO.ipynb`
+5. `F4/notebooks/S3_F4_Consolidado.ipynb`
 
 F1 y F2 leen `data/raw/ens2016.xlsx`, que no está en el repositorio (ver
-«Datos»). Los notebooks de F3 se pueden ejecutar sin ese archivo.
+«Datos»). Los notebooks de F3 y F4 se pueden ejecutar sin ese archivo.
 
 Los notebooks deben correr de principio a fin sin errores
-(Kernel → Restart Kernel and Run All Cells). Los notebooks de F3
+(Kernel → Restart Kernel and Run All Cells). Los notebooks de F3 y F4
 importan su código desde `src/`: la formativa usa `carga.py` y
 `medicion.py`; el de la Sumativa 2 usa además las clases de
-`transformador.py`, `imputadores.py` y `transformadores.py`.
+`transformador.py`, `imputadores.py` y `transformadores.py`; el de la
+Sumativa 3 reutiliza el pipeline completo para validar reproducibilidad.
 
 **Nota sobre las salidas:** los `.ipynb` se guardan sin salidas por
 `nbstripout` (paso 4), para mantener limpio el historial de Git. La
 ejecución completa de cada notebook, con sus salidas, está en
-`docs/evidencias/` (F1, F2 y F3).
+`docs/evidencias/` (F1 a F4).
 
 ### Pruebas automatizadas
 
@@ -224,7 +281,6 @@ si el proyecto justifica recursividad.
   recursiva, porque la profundidad del diccionario anidado no se
   conoce de antemano.
 
-
 ### Sumativa 2: preprocesamiento en clases
 
 El notebook `F3/notebooks/S2_F3_NucleoAlgoritmico_Eficiencia_POO.ipynb`
@@ -264,6 +320,47 @@ conclusiones.
 - **Extensibilidad:** un paso nuevo se agrega sin modificar `Pipeline`
   ni las clases existentes (demostrado en el notebook).
 
+## Fase 4: resultados, discusión y cierre
+
+El notebook `F4/notebooks/S3_F4_Consolidado.ipynb` toma el pipeline
+validado en la Fase 3 y lo usa para responder la pregunta de
+investigación: explora los cinco objetivos específicos, selecciona tres
+figuras oficiales con su interpretación, y discute los resultados a la
+luz de la literatura y las cifras de MINSAL.
+
+**Cómo se resolvieron las decisiones que quedaron abiertas al cierre de la Fase 3**
+
+- **Diseño muestral complejo.** Se optó por el ponderador simple
+  (`Fexp_F1F2p_Corr`) para las cifras que se citan en el texto, de forma
+  que sean comparables con las oficiales de MINSAL. No se implementó el
+  diseño muestral completo con `Conglomerado` y `Estrato`: eso requiere
+  herramientas fuera del alcance del curso (paquete `survey` de R o
+  `samplics` de Python). Queda declarado como limitación en la Parte I
+  (1.5) y retomado en la discusión (Parte VIII).
+- **Escalamiento de `as27`.** Se mantuvo `EscaladorEstandar`, igual que
+  para `Edad` e `IMC`; no se evaluó `RobustScaler` pese a la asimetría de
+  `as27` identificada en la Fase 3. Queda como mejora pendiente para una
+  futura iteración del proyecto.
+- **Personas sin ingreso declarado (816 casos sin `as27` ni `as28`).** Se
+  mantienen como valores faltantes explícitos en todo el análisis, sin
+  imputación adicional; la Parte I y la Parte VIII documentan esta
+  decisión como una limitación reconocida, no una omisión.
+- **Codificación de `GPAQ`.** Se confirmó contra el libro de códigos
+  oficial de la ENS que la escala 1=Bajo, 2=Moderado, 3=Alto es correcta.
+
+**Qué entrega la Fase 4**
+
+- Los cinco objetivos específicos explorados (Parte V) y las tres figuras
+  oficiales con su interpretación (Parte VI).
+- Resultados, discusión y conclusiones con mejoras propuestas basadas en
+  evidencia (Parte VIII).
+- Trazabilidad completa de las mejoras del proyecto, de F1 a F4, con
+  commits y PR verificables (Parte IX, `F4/changelog.md`).
+- Verificación final de reproducibilidad: huellas de las figuras, igualdad
+  con `ens_procesado.csv`, 59 pruebas por clase (Parte X).
+
+Con esto, el proyecto queda cerrado para la Sumativa 3.
+
 ## Decisiones técnicas principales
 
 - Se utiliza `Fexp_F1F2p_Corr` como ponderador porque el análisis
@@ -299,7 +396,7 @@ conclusiones.
 
 ## Convención de commits
 
-El equipo utiliza prefijos estandarizados para registrar cada avance en Git. 
+El equipo utiliza prefijos estandarizados para registrar cada avance en Git.
 Los mensajes deben ser breves, descriptivos y redactados en tiempo presente.
 
 Prefijos usados: `docs`, `data`, `feat`, `fix`, `refactor`, `chore`.
@@ -309,29 +406,3 @@ Prefijos usados: `docs`, `data`, `feat`, `fix`, `refactor`, `chore`.
 * `docs:` Cambios en la documentación, README u observaciones del informe (ej. `docs: actualiza decisiones tecnicas de la Fase 1`).
 * `refactor:` Reorganización o optimización de código sin alterar sus resultados (ej. `refactor: modulariza funciones de limpieza en src/`).
 * `chore:` Tareas de mantenimiento de la estructura o del entorno (ej. `chore: actualiza dependencias en requirements.txt`).
-
-## Fase 4: qué deja listo la Fase 3 y qué queda por decidir
-
-**Lo que queda listo**
-
-- Un pipeline reproducible, validado con 59 pruebas por clase y con
-  igualdad exacta frente a `ens_procesado.csv`, que sigue siendo el
-  archivo vigente para el análisis (ver `data/processed/README.md`).
-- El conjunto final de 5.511 personas y 23 variables, con las banderas
-  `as28_no_responde` y `as27_imputado` y las columnas del diseño muestral
-  (`Fexp_F1F2p_Corr`, `Conglomerado`, `Estrato`) sin transformar.
-- Cada paso es una clase: cambiar un tratamiento es reemplazar un paso
-  de la lista, sin reescribir el resto.
-
-**Decisiones abiertas**
-
-- Definir si el análisis usará `Conglomerado`, `Estrato` y
-  `Fexp_F1F2p_Corr` para un diseño muestral complejo, o solo el
-  ponderador de forma simple.
-- Decidir si `as27` debe escalarse con `RobustScaler` en vez de
-  `StandardScaler`, dada su asimetría.
-- Definir cómo se tratan en el análisis las 816 personas sin ingreso
-  declarado (sin `as27` ni `as28`), que quedan sin valor a propósito
-  porque su no respuesta podría no ser aleatoria.
-- Confirmar contra el libro de códigos oficial F2 si `GPAQ` es
-  efectivamente 1=Bajo, 2=Moderado, 3=Alto.
