@@ -91,3 +91,10 @@ puede verificarse en GitHub.
 - Cambio: se seleccionan tres figuras oficiales con el hilo contexto, contraste y
   resolución, y cada interpretación explica cómo aporta al relato.
 - Commits: 30c8b23 (PR #30) y 4546205 (PR #33), ambos de Ninoska Yévenes Hernández.
+
+### 2026-10-01 · Verificación de la codificación de GPAQ contra el libro de códigos
+- Observación: en la Fase 2 (commit 3c23499) la escala 1=Bajo, 2=Moderado, 3=Alto de
+  `GPAQ` se dejó declarada como supuesto sin verificar.
+- Cambio: se revisa contra el libro de códigos oficial de la ENS 2016-2017 y se confirma
+  que la codificación es correcta. Se actualiza el README para reflejar la verificación.
+- Responsable: Felipe Díaz Toro.
